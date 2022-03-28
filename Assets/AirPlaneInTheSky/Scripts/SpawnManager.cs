@@ -14,6 +14,8 @@ public class SpawnManager : MonoBehaviour
     public GameObject target;
     public GameObject fuel;
     public GameObject ammo;
+    public GameObject obstacle;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,8 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(GameObjectSpawnTimeHandle(target, 2f));
         StartCoroutine(GameObjectSpawnTimeHandle(fuel, 15f));
         StartCoroutine(GameObjectSpawnTimeHandle(ammo, 40f));
+        StartCoroutine(GameObjectSpawnTimeHandle(obstacle, 20f));
+
     }
 
     // Update is called once per frame
