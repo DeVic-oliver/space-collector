@@ -155,6 +155,7 @@ MonoBehaviour:
   target: {fileID: 7327331041769431449, guid: 0654ff62b0a27cc47b65b70146ade71f, type: 3}
   fuel: {fileID: 7550233534204242565, guid: 2f2bb2a3f4914c54d9b5c3e16b1140f1, type: 3}
   ammo: {fileID: 8485558928836546328, guid: 31a60f3c9de5dcb45831c17ceb88c281, type: 3}
+  obstacle: {fileID: 4326090529032624846, guid: 1048da7cf008f0d43b4e95689f70404a, type: 3}
 --- !u!4 &12909208
 Transform:
   m_ObjectHideFlags: 0
