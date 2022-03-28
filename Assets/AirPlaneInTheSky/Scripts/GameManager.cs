@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     GameObject spawnManager;
 
     float fuelTimer = 0;
+    float playerFuel;
 
     [SerializeField] float timeToGameOver = 60;
 
@@ -48,6 +49,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       CheckRemaingTime();
+
+       CheckFuelTank();
+    }
+
+    void GameOver()
+    {
+        isGameActive = false;
+        SetCursorVisibility(true);
+        gameOverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+    }
+
+    void CheckRemaingTime()
+    {
         if (timeToGameOver > 0 && isGameActive)
         {
             timeToGameOver -= Time.deltaTime;
@@ -60,14 +76,17 @@ public class GameManager : MonoBehaviour
             player.GetComponent<SpaceShipController>().enabled = false;
             spawnManager.GetComponent<SpawnManager>().enabled = false;
         }
-        
-       float playerFuel = player.GetComponent<SpaceShip>().fuelTank;
+    }
 
-        fuelTimer += Time.deltaTime;
-       
+    void CheckFuelTank()
+    {
+        playerFuel = player.GetComponent<SpaceShip>().fuelTank;
+
+        fuelTimer += Time.deltaTime; // fuelTimer is used to decrease fuel of the spaceship after a certain amout of time
+
         if (fuelTimer > 2)
         {
-            if(playerFuel <= 0)
+            if (playerFuel <= 0)
             {
                 GameOver();
                 fuelTank.text = "Fuel Tank: " + 0f + "%";
@@ -82,16 +101,6 @@ public class GameManager : MonoBehaviour
         fuelTank.text = "Fuel Tank: " + playerFuel + "%";
 
         ammo.text = "Ammo: " + player.GetComponent<SpaceShip>().ammo;
-
-
-    }
-
-    void GameOver()
-    {
-        isGameActive = false;
-        SetCursorVisibility(true);
-        gameOverText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(true);
     }
 
     public void RestartGame()
