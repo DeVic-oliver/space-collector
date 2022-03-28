@@ -63,14 +63,14 @@ public class SpaceShip : MonoBehaviour
 
         if (other.gameObject.CompareTag("AmmoSupply"))
         {
-            float ammoTotal = ammo + 5;
+            int ammoTotal = ammo + 50;
             if(ammoTotal >= ammoCapacity)
             {
                 ammo = ammoCapacity;
             }
             else
             {
-                ammo += 5;
+                ammo = ammoTotal;
             }
             Destroy(other.gameObject);
         }
