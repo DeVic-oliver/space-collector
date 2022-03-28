@@ -30,11 +30,11 @@ public class GameManager : MonoBehaviour
         isGameActive = true;
 
         timer.text = "Time: " + timeToGameOver + "s";
-        
+
         gameOverText.gameObject.SetActive(false);
-        
+
         restartButton.gameObject.SetActive(false);
-        
+
         spawnManager = GameObject.Find("SpawnManager");
 
         fuelTank.text = "Fuel Tank: " + player.GetComponent<SpaceShip>().fuelTank + "%";
@@ -49,12 +49,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       CheckRemaingTime();
+        CheckRemaingTime();
 
-       CheckFuelTank();
+        CheckFuelTank();
+
+        CheckPlayerStatus();
     }
 
-    void GameOver()
+    public void GameOver()
     {
         isGameActive = false;
         SetCursorVisibility(true);
@@ -112,7 +114,7 @@ public class GameManager : MonoBehaviour
     void SetCursorVisibility(bool visibility = true)
 
     {
-        if(visibility == true)
+        if (visibility == true)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = visibility;
@@ -121,6 +123,14 @@ public class GameManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = visibility;
+        }
+    }
+
+    void CheckPlayerStatus()
+    {
+        if (!player.GetComponent<SpaceShip>().isAlive)
+        {
+            GameOver();
         }
     }
 }
