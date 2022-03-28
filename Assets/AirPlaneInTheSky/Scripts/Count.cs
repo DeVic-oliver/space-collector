@@ -14,11 +14,6 @@ public class Count : MonoBehaviour
         count = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Target"))

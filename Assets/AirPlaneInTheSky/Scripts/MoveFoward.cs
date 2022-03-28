@@ -7,13 +7,6 @@ public class MoveFoward : MonoBehaviour
     float speed = 1200f;
     float timeToDestroy = 5f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector3.up * speed * Time.deltaTime, Space.Self);
