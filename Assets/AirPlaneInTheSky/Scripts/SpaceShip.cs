@@ -15,10 +15,12 @@ public class SpaceShip : MonoBehaviour
     public int ammoCapacity = 300;
     public int ammo = 100;
 
+    public bool isAlive { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
+        isAlive = true;
         spaceShipController = GetComponent<SpaceShipController>();
     }
 
@@ -73,6 +75,11 @@ public class SpaceShip : MonoBehaviour
                 ammo = ammoTotal;
             }
             Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            isAlive = false;
         }
     }
 }
