@@ -16,11 +16,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
 
-    public TextMeshProUGUI gameOverText;
+    public GameObject gameOverContainer;
+
     public TextMeshProUGUI timer;
     public TextMeshProUGUI fuelTank;
     public TextMeshProUGUI ammo;
-    public Button restartButton;
+    public TextMeshProUGUI playerName;
+    public TextMeshProUGUI gameOverScore;
+
 
     public bool isGameActive = false;
 
@@ -31,18 +34,17 @@ public class GameManager : MonoBehaviour
 
         timer.text = "Time: " + timeToGameOver + "s";
 
-        gameOverText.gameObject.SetActive(false);
-
-        restartButton.gameObject.SetActive(false);
+        playerName.text = MainManager.Instance.PlayerName;
+        
+        gameOverContainer.gameObject.SetActive(false);
 
         spawnManager = GameObject.Find("SpawnManager");
 
-        fuelTank.text = "Fuel Tank: " + player.GetComponent<SpaceShip>().fuelTank + "%";
+        fuelTank.text = "Fuel: " + player.GetComponent<SpaceShip>().fuelTank + "%";
 
         ammo.text = "Ammo: " + player.GetComponent<SpaceShip>().ammo;
 
         SetCursorVisibility(false);
-
     }
 
 
@@ -60,8 +62,9 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = false;
         SetCursorVisibility(true);
-        gameOverText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(true);
+        gameOverScore.text = player.GetComponent<Count>().countText.text;
+        gameOverContainer.gameObject.SetActive(true);
+   
     }
 
     void CheckRemaingTime()
@@ -91,7 +94,7 @@ public class GameManager : MonoBehaviour
             if (playerFuel <= 0)
             {
                 GameOver();
-                fuelTank.text = "Fuel Tank: " + 0f + "%";
+                fuelTank.text = "Fuel: " + 0f + "%";
             }
             else
             {
@@ -100,7 +103,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        fuelTank.text = "Fuel Tank: " + playerFuel + "%";
+        fuelTank.text = "Fuel: " + playerFuel + "%";
 
         ammo.text = "Ammo: " + player.GetComponent<SpaceShip>().ammo;
     }

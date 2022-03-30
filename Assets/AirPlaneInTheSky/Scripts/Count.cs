@@ -19,7 +19,7 @@ public class Count : MonoBehaviour
         if (other.gameObject.CompareTag("Target"))
         {
             count++;
-            countText.text = "Count: " + count;
+            countText.text = "Score: " + count;
             Debug.Log(count);
             Destroy(other.gameObject);
         }
