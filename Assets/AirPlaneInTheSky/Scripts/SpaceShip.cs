@@ -4,20 +4,63 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
-    float fuelUsage = 2f;
+    GameManager gameManager;
 
-    [SerializeField] float turboConsume = 3f;
+    int fuelUsage = 2;
+
+    [SerializeField] int turboConsume = 3;
     [SerializeField] SpaceShipController spaceShipController;
-
+    
     public GameObject ammoType;
 
-    public float fuelTank = 100f;
-    public int ammoCapacity = 300;
-    public int ammo = 100;
+    int fuelTank = 100;
+    public int FuelTank 
+    {
+        get { return fuelTank; }
+        set
+        {
+            if(value < 0)
+            {
+                Debug.Log("ERROR");
+            }
+            else
+            {
+                fuelTank = value;
+            }
+        }
+    }
+
+
+    int ammo = 100;
+    public int Ammo
+    {
+        get { return ammo; }
+        set
+        {
+            if(value < 0)
+            {
+                Debug.Log("ERROR");
+            }
+            else
+            {
+                ammo = value;
+            }
+        }
+    }
+    
+    [SerializeField] int ammoCapacity = 300;
+    public int AmmoCapacity
+    {
+        get { return ammoCapacity; }
+    }
 
     public bool isAlive { get; set; }
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();   
+    }
     void Start()
     {
         isAlive = true;
@@ -34,7 +77,7 @@ public class SpaceShip : MonoBehaviour
     {
         if (spaceShipController.isTurboActive)
         {
-            float fuelAux = fuelUsage;
+            int fuelAux = fuelUsage;
             fuelUsage *= turboConsume;
             fuelTank -= fuelUsage;
             fuelUsage = fuelAux;
@@ -49,31 +92,21 @@ public class SpaceShip : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Target"))
+        {
+            gameManager.AddScore();
+            Destroy(other.gameObject);
+        }
+
         if (other.gameObject.CompareTag("Fuel"))
         {
-            float fuelTotal = fuelTank + 25f;
-            if (fuelTotal >= 100)
-            {
-                fuelTank = 100f;
-            }
-            else
-            {
-                fuelTank += 25f;
-            }
+            gameManager.AddFuel();
             Destroy(other.gameObject);
         }
 
         if (other.gameObject.CompareTag("AmmoSupply"))
         {
-            int ammoTotal = ammo + 50;
-            if(ammoTotal >= ammoCapacity)
-            {
-                ammo = ammoCapacity;
-            }
-            else
-            {
-                ammo = ammoTotal;
-            }
+            gameManager.AddAmmo();
             Destroy(other.gameObject);
         }
 

@@ -18,13 +18,13 @@ public class Shoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ammo = spaceShip.GetComponent<SpaceShip>().ammo;
+        ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ammo = spaceShip.GetComponent<SpaceShip>().ammo;
+        ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
         shotFlash.Stop();
         Fire();
     }
@@ -33,7 +33,7 @@ public class Shoot : MonoBehaviour
     {
         if (Input.GetButton("Fire1"))
         {
-            if (!(ammo == 0) && ammo <= spaceShip.GetComponent<SpaceShip>().ammo)
+            if (!(ammo == 0) && ammo <= spaceShip.GetComponent<SpaceShip>().Ammo)
             {
                 shotFlash.Play();
                 fireRate--;
@@ -41,7 +41,7 @@ public class Shoot : MonoBehaviour
                 {
                     Instantiate(ammoType, transform.position, transform.rotation);
                     ammo--;
-                    spaceShip.GetComponent<SpaceShip>().ammo = ammo;
+                    spaceShip.GetComponent<SpaceShip>().Ammo = ammo;
                     fireRate = auxFireRate;
                 }
             }

@@ -32,7 +32,6 @@ public class SpaceShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shockWave.Stop();
 
         MouseControl();
 
@@ -41,6 +40,11 @@ public class SpaceShipController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !isTurboActive)
         {
             Turbo();
+        }
+
+        if (!isTurboActive)
+        {
+            shockWave.Stop();
         }
     }
 

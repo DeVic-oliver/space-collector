@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c5f407db02946c4c9bb0c9565630781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 8067261229266431913, guid: e1bab7a3e620c8c46980b3a4ad1b8ad7, type: 3}
+  target: {fileID: 4326090529032624846, guid: 28abe75f9bd57844f9e41af3b0aad130, type: 3}
   fuel: {fileID: 7550233534204242565, guid: 2f2bb2a3f4914c54d9b5c3e16b1140f1, type: 3}
   ammo: {fileID: 8485558928836546328, guid: 31a60f3c9de5dcb45831c17ceb88c281, type: 3}
   obstacle: {fileID: 4326090529032624846, guid: 1048da7cf008f0d43b4e95689f70404a, type: 3}
@@ -1803,6 +1803,7 @@ MonoBehaviour:
   fuelTank: {fileID: 356962788}
   ammo: {fileID: 396458436}
   playerName: {fileID: 519649029}
+  scoreDisplayText: {fileID: 1290154605}
   gameOverScore: {fileID: 1469972025}
   isGameActive: 0
 --- !u!4 &1181298163
@@ -1904,6 +1905,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4945707815571746, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198798914852134490, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
+      propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198798914852134490, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
@@ -2697,11 +2702,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turboConsume: 3
-  spaceShipController: {fileID: 0}
-  ammoType: {fileID: 0}
-  fuelTank: 100
+  spaceShipController: {fileID: 1951683958}
+  ammoType: {fileID: 3732215254681456026, guid: e1a921129894a1f4e904212a35451c90, type: 3}
   ammoCapacity: 300
-  ammo: 100
 --- !u!114 &1951683958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2756,16 +2759,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.482297, y: 6.169104, z: 18.139877}
   m_Center: {x: 0.09168005, y: -0.118159056, z: -0.9810691}
---- !u!114 &1951683962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951683956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5699cb6a699d14c408bd96485e77813e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  countText: {fileID: 1290154605}

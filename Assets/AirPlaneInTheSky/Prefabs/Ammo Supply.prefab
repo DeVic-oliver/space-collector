@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5996128024658080132}
   - component: {fileID: 48851788468065331}
   - component: {fileID: -6450980056161563662}
+  - component: {fileID: -1028317602145714320}
   m_Layer: 0
   m_Name: Ammo Supply
   m_TagString: AmmoSupply
@@ -106,5 +107,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6e52e75a44fe1e4fa599b12a3f16083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1028317602145714320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485558928836546328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc70eb5a59e74041a6b987fd1c3dfcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

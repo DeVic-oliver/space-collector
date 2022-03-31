@@ -12,16 +12,21 @@ public class GameManager : MonoBehaviour
     float fuelTimer = 0;
     float playerFuel;
 
+    int score = 0;
+
+    SpaceShip spaceShipScript;
+
     [SerializeField] float timeToGameOver = 60;
 
     public GameObject player;
-
+    
     public GameObject gameOverContainer;
 
     public TextMeshProUGUI timer;
     public TextMeshProUGUI fuelTank;
     public TextMeshProUGUI ammo;
     public TextMeshProUGUI playerName;
+    public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI gameOverScore;
 
 
@@ -30,19 +35,22 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spawnManager = GameObject.Find("SpawnManager");
+
+        spaceShipScript = player.GetComponent<SpaceShip>();
+
         isGameActive = true;
 
         timer.text = "Time: " + timeToGameOver + "s";
 
-        playerName.text = MainManager.Instance.PlayerName;
+        //playerName.text = MainManager.Instance.PlayerName;
         
         gameOverContainer.gameObject.SetActive(false);
 
-        spawnManager = GameObject.Find("SpawnManager");
 
-        fuelTank.text = "Fuel: " + player.GetComponent<SpaceShip>().fuelTank + "%";
+        fuelTank.text = "Fuel: " + spaceShipScript.FuelTank + "%";
 
-        ammo.text = "Ammo: " + player.GetComponent<SpaceShip>().ammo;
+        ammo.text = "Ammo: " + spaceShipScript.Ammo;
 
         SetCursorVisibility(false);
     }
@@ -62,7 +70,7 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = false;
         SetCursorVisibility(true);
-        gameOverScore.text = player.GetComponent<Count>().countText.text;
+        gameOverScore.text = scoreDisplayText.text;
         gameOverContainer.gameObject.SetActive(true);
    
     }
@@ -85,7 +93,7 @@ public class GameManager : MonoBehaviour
 
     void CheckFuelTank()
     {
-        playerFuel = player.GetComponent<SpaceShip>().fuelTank;
+        playerFuel = spaceShipScript.FuelTank;
 
         fuelTimer += Time.deltaTime; // fuelTimer is used to decrease fuel of the spaceship after a certain amout of time
 
@@ -98,14 +106,13 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                playerFuel = player.GetComponent<SpaceShip>().DecreaseFuel();
+                playerFuel = spaceShipScript.DecreaseFuel();
                 fuelTimer = 0;
             }
         }
 
         fuelTank.text = "Fuel: " + playerFuel + "%";
 
-        ammo.text = "Ammo: " + player.GetComponent<SpaceShip>().ammo;
     }
 
     public void RestartGame()
@@ -134,6 +141,41 @@ public class GameManager : MonoBehaviour
         if (!player.GetComponent<SpaceShip>().isAlive)
         {
             GameOver();
+        }
+    }
+
+    public void AddScore() 
+    {
+        score++;
+        scoreDisplayText.text = "Score: " + score;
+    }
+
+    public void AddFuel()
+    {
+        int spaceShipfFuel = spaceShipScript.FuelTank;
+        int fuelTotal = spaceShipfFuel + 25;
+        if (fuelTotal >= 100)
+        {
+            spaceShipfFuel = 100;
+        }
+        else
+        {
+            spaceShipfFuel += 25;
+        }
+        spaceShipScript.FuelTank = spaceShipfFuel;
+    }
+
+    public void AddAmmo()
+    {
+        int ammoCapacity = spaceShipScript.AmmoCapacity;
+        int ammoTotal = spaceShipScript.Ammo + 50;
+        if (ammoTotal >= ammoCapacity)
+        {
+            ammoTotal = ammoCapacity;
+        }
+        else
+        {
+            spaceShipScript.Ammo = ammoTotal;
         }
     }
 }
