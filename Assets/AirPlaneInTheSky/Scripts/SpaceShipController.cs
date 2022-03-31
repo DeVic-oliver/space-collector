@@ -13,7 +13,9 @@ public class SpaceShipController : MonoBehaviour
     [SerializeField] float fowardSpeed = 130f;
     [SerializeField] float turbo = 260f;
     [SerializeField] float turboCountDown = 1.5f;
-    
+
+    [SerializeField] ParticleSystem shockWave;
+
     public bool isTurboActive = false;
     
     public float lookRotateSpeed = 70f;
@@ -30,6 +32,8 @@ public class SpaceShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        shockWave.Stop();
+
         MouseControl();
 
         RollControl();
@@ -65,6 +69,7 @@ public class SpaceShipController : MonoBehaviour
 
     void Turbo()
     {
+        shockWave.Play();
         isTurboActive = true;
         float initialSpeed = fowardSpeed;
         fowardSpeed += turbo;

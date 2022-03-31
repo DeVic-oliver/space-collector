@@ -10,6 +10,8 @@ public class Shoot : MonoBehaviour
     int ammo;
 
     [SerializeField] GameObject spaceShip;
+    [SerializeField] ParticleSystem shotFlash;
+
 
     public GameObject ammoType;
 
@@ -23,11 +25,17 @@ public class Shoot : MonoBehaviour
     void Update()
     {
         ammo = spaceShip.GetComponent<SpaceShip>().ammo;
+        shotFlash.Stop();
+        Fire();
+    }
 
+    void Fire()
+    {
         if (Input.GetButton("Fire1"))
         {
             if (!(ammo == 0) && ammo <= spaceShip.GetComponent<SpaceShip>().ammo)
             {
+                shotFlash.Play();
                 fireRate--;
                 if (fireRate <= 0)
                 {
@@ -39,6 +47,6 @@ public class Shoot : MonoBehaviour
             }
         }
     }
-
-
 }
+
+
