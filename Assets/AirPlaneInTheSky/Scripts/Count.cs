@@ -20,8 +20,6 @@ public class Count : MonoBehaviour
         {
             count++;
             countText.text = "Score: " + count;
-            Debug.Log(count);
-            Destroy(other.gameObject);
         }
     }
 }
