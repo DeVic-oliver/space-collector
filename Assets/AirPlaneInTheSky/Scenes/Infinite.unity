@@ -3224,6 +3224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turboConsume: 3
   spaceShipController: {fileID: 1951683958}
+  explosionVFX: {fileID: 19800002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   ammoType: {fileID: 3732215254681456026, guid: e1a921129894a1f4e904212a35451c90, type: 3}
   ammoCapacity: 300
 --- !u!114 &1951683958
