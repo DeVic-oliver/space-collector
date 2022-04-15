@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 665600b0fbc207e48a602ebf369eb79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitVFX: {fileID: 19800014, guid: 5332791ebce075d4a9e56f4581e7fb47, type: 3}
 --- !u!114 &-243410581480568611
 MonoBehaviour:
   m_ObjectHideFlags: 0

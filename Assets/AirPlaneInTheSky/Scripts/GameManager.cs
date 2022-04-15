@@ -13,13 +13,13 @@ public class GameManager : MonoBehaviour
     float playerFuel;
 
     int score = 0;
+    int playerAmmo;
 
     SpaceShip spaceShipScript;
 
     [SerializeField] float timeToGameOver = 60;
 
     public GameObject player;
-    
     public GameObject gameOverContainer;
 
     public TextMeshProUGUI timer;
@@ -64,6 +64,8 @@ public class GameManager : MonoBehaviour
         CheckFuelTank();
 
         CheckPlayerStatus();
+
+        CheckPlayerAmmo();
     }
 
     public void GameOver()
@@ -75,6 +77,10 @@ public class GameManager : MonoBehaviour
    
     }
 
+
+    /*
+     * 'CHECK' Functions for checking player resources and status
+     */
     void CheckRemaingTime()
     {
         if (timeToGameOver > 0 && isGameActive)
@@ -115,6 +121,19 @@ public class GameManager : MonoBehaviour
 
     }
 
+    void CheckPlayerAmmo()
+    {
+        ammo.text = "Ammo: " + spaceShipScript.Ammo;
+    }
+
+    void CheckPlayerStatus()
+    {
+        if (!player.GetComponent<SpaceShip>().isAlive)
+        {
+            GameOver();
+        }
+    }
+
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -136,13 +155,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CheckPlayerStatus()
-    {
-        if (!player.GetComponent<SpaceShip>().isAlive)
-        {
-            GameOver();
-        }
-    }
+ 
 
     public void AddScore() 
     {

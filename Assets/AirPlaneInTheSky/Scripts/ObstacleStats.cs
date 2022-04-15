@@ -24,9 +24,21 @@ public class ObstacleStats : MonoBehaviour
             }
         }
     }
+
+    [SerializeField] ParticleSystem explosionVFX;
+
     // Start is called before the first frame update
     void Start()
     {
         health = 100;
+    }
+
+    private void Update()
+    {
+        if(health <= 0)
+        {
+            Instantiate(explosionVFX, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
     }
 }

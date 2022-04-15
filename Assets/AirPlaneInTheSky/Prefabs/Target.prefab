@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2543958071052314478}
   - component: {fileID: 6231308803580850247}
   - component: {fileID: 5157012650080868581}
-  - component: {fileID: 1150346157327997639}
+  - component: {fileID: 8261711369120718755}
   m_Layer: 0
   m_Name: Target
   m_TagString: Target
@@ -96,7 +96,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1150346157327997639
+--- !u!114 &8261711369120718755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4326090529032624846}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 194dee343bd43f34dbe7cce0522d4774, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cc70eb5a59e74041a6b987fd1c3dfcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   particlesContainer: {fileID: 1459862227383078, guid: cc461484bcafc664fb68be84c1fc6860, type: 3}

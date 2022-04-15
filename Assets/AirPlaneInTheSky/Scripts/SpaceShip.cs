@@ -10,7 +10,7 @@ public class SpaceShip : MonoBehaviour
 
     [SerializeField] int turboConsume = 3;
     [SerializeField] SpaceShipController spaceShipController;
-    
+
     public GameObject ammoType;
 
     int fuelTank = 100;
@@ -56,21 +56,16 @@ public class SpaceShip : MonoBehaviour
 
     public bool isAlive { get; set; }
 
-    // Start is called before the first frame update
     void Awake()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();   
     }
+
+    // Start is called before the first frame update
     void Start()
     {
         isAlive = true;
         spaceShipController = GetComponent<SpaceShipController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public float DecreaseFuel()
@@ -95,19 +90,16 @@ public class SpaceShip : MonoBehaviour
         if (other.gameObject.CompareTag("Target"))
         {
             gameManager.AddScore();
-            Destroy(other.gameObject);
         }
 
         if (other.gameObject.CompareTag("Fuel"))
         {
             gameManager.AddFuel();
-            Destroy(other.gameObject);
         }
 
         if (other.gameObject.CompareTag("AmmoSupply"))
         {
             gameManager.AddAmmo();
-            Destroy(other.gameObject);
         }
 
         if (other.gameObject.CompareTag("Obstacle"))

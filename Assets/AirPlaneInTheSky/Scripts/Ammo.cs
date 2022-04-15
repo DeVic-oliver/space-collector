@@ -21,6 +21,8 @@ public class Ammo : MonoBehaviour
         }
     }
 
+    [SerializeField] ParticleSystem hitVFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,15 +40,10 @@ public class Ammo : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             damage = Random.Range(2, 7);
-
             int obstacleHealth = collision.gameObject.GetComponent<ObstacleStats>().Health - damage;
             collision.gameObject.GetComponent<ObstacleStats>().Health = obstacleHealth;
-            //Debug.Log(damage);
             Debug.Log(collision.gameObject.GetComponent<ObstacleStats>().Health);
-            if (obstacleHealth <= 0)
-            {
-                Destroy(collision.gameObject);
-            }
+            Instantiate(hitVFX, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }

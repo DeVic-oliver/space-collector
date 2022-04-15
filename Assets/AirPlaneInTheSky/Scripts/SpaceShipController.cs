@@ -15,6 +15,7 @@ public class SpaceShipController : MonoBehaviour
     [SerializeField] float turboCountDown = 1.5f;
 
     [SerializeField] ParticleSystem shockWave;
+    [SerializeField] ParticleSystem[] turboParticles;
 
     public bool isTurboActive = false;
     
@@ -45,6 +46,7 @@ public class SpaceShipController : MonoBehaviour
         if (!isTurboActive)
         {
             shockWave.Stop();
+            SwitchTurboTurbine(false);
         }
     }
 
@@ -75,6 +77,7 @@ public class SpaceShipController : MonoBehaviour
     {
         shockWave.Play();
         isTurboActive = true;
+        SwitchTurboTurbine(isTurboActive);
         float initialSpeed = fowardSpeed;
         fowardSpeed += turbo;
         StartCoroutine(TurboTime(initialSpeed));
@@ -85,5 +88,24 @@ public class SpaceShipController : MonoBehaviour
         yield return new WaitForSeconds(turboCountDown);
         fowardSpeed = initialSpeed;
         isTurboActive = false;
+        SwitchTurboTurbine(isTurboActive);
+    }
+
+    void SwitchTurboTurbine(bool isTurboActive)
+    {
+        if (isTurboActive)
+        {
+            foreach (ParticleSystem turbine in turboParticles)
+            {
+                turbine.Play();
+            }
+        }
+        else
+        {
+            foreach (ParticleSystem turbine in turboParticles)
+            {
+                turbine.Stop();
+            }
+        }
     }
 }
