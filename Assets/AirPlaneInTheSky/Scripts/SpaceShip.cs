@@ -10,6 +10,7 @@ public class SpaceShip : MonoBehaviour
 
     [SerializeField] int turboConsume = 3;
     [SerializeField] SpaceShipController spaceShipController;
+    [SerializeField] ParticleSystem explosionVFX;
 
     public GameObject ammoType;
 
@@ -104,6 +105,7 @@ public class SpaceShip : MonoBehaviour
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
+            Instantiate(explosionVFX,transform.position, transform.rotation);
             isAlive = false;
         }
     }
