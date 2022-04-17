@@ -10,6 +10,8 @@ public class SpaceShipController : MonoBehaviour
 
     float rollInput;
 
+    [SerializeField] GameObject spaceShipScript;
+
     [SerializeField] float fowardSpeed = 130f;
     [SerializeField] float turbo = 260f;
     [SerializeField] float turboCountDown = 1.5f;
@@ -76,6 +78,7 @@ public class SpaceShipController : MonoBehaviour
     void Turbo()
     {
         shockWave.Play();
+        spaceShipScript.GetComponent<SpaceShip>().PlaySound();
         isTurboActive = true;
         SwitchTurboTurbine(isTurboActive);
         float initialSpeed = fowardSpeed;

@@ -16,8 +16,10 @@ public class GameManager : MonoBehaviour
     int playerAmmo;
 
     SpaceShip spaceShipScript;
+    AudioSource generalSoundHandle;
 
     [SerializeField] float timeToGameOver = 60;
+    [SerializeField] AudioClip itemCollectedSound;
 
     public GameObject player;
     public GameObject gameOverContainer;
@@ -47,11 +49,12 @@ public class GameManager : MonoBehaviour
         
         gameOverContainer.gameObject.SetActive(false);
 
-
         fuelTank.text = "Fuel: " + spaceShipScript.FuelTank + "%";
 
         ammo.text = "Ammo: " + spaceShipScript.Ammo;
 
+        generalSoundHandle = GetComponent<AudioSource>();
+        
         SetCursorVisibility(false);
     }
 
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
         CheckPlayerStatus();
 
         CheckPlayerAmmo();
+
     }
 
     public void GameOver()
@@ -134,6 +138,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void PlaySound(AudioClip audioClip)
+    {
+        generalSoundHandle.PlayOneShot(audioClip, 0.1f);
+    }
+
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -155,16 +164,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
- 
-
     public void AddScore() 
     {
+        PlaySound(itemCollectedSound);
         score++;
         scoreDisplayText.text = "Score: " + score;
     }
 
     public void AddFuel()
     {
+        PlaySound(itemCollectedSound);
         int spaceShipfFuel = spaceShipScript.FuelTank;
         int fuelTotal = spaceShipfFuel + 25;
         if (fuelTotal >= 100)
@@ -180,6 +189,7 @@ public class GameManager : MonoBehaviour
 
     public void AddAmmo()
     {
+        PlaySound(itemCollectedSound);
         int ammoCapacity = spaceShipScript.AmmoCapacity;
         int ammoTotal = spaceShipScript.Ammo + 50;
         if (ammoTotal >= ammoCapacity)
@@ -191,4 +201,6 @@ public class GameManager : MonoBehaviour
             spaceShipScript.Ammo = ammoTotal;
         }
     }
+
+
 }

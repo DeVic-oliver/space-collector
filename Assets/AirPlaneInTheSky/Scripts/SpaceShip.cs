@@ -5,12 +5,14 @@ using UnityEngine;
 public class SpaceShip : MonoBehaviour
 {
     GameManager gameManager;
+    AudioSource spaceShipAudioSource;
 
     int fuelUsage = 2;
 
     [SerializeField] int turboConsume = 3;
     [SerializeField] SpaceShipController spaceShipController;
     [SerializeField] ParticleSystem explosionVFX;
+    [SerializeField] AudioClip turboSound;
 
     public GameObject ammoType;
 
@@ -67,6 +69,7 @@ public class SpaceShip : MonoBehaviour
     {
         isAlive = true;
         spaceShipController = GetComponent<SpaceShipController>();
+        spaceShipAudioSource = GetComponent<AudioSource>();
     }
 
     public float DecreaseFuel()
@@ -108,5 +111,10 @@ public class SpaceShip : MonoBehaviour
             Instantiate(explosionVFX,transform.position, transform.rotation);
             isAlive = false;
         }
+    }
+
+    public void PlaySound()
+    {
+        spaceShipAudioSource.PlayOneShot(turboSound, .3f); 
     }
 }

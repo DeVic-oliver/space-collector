@@ -42,7 +42,6 @@ public class Ammo : MonoBehaviour
             damage = Random.Range(2, 7);
             int obstacleHealth = collision.gameObject.GetComponent<ObstacleStats>().Health - damage;
             collision.gameObject.GetComponent<ObstacleStats>().Health = obstacleHealth;
-            Debug.Log(collision.gameObject.GetComponent<ObstacleStats>().Health);
             Instantiate(hitVFX, transform.position, transform.rotation);
             Destroy(gameObject);
         }

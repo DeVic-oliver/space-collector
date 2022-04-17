@@ -11,13 +11,13 @@ public class Shoot : MonoBehaviour
 
     [SerializeField] GameObject spaceShip;
     [SerializeField] ParticleSystem shotFlash;
-
-
+    
     public GameObject ammoType;
 
     // Start is called before the first frame update
     void Start()
     {
+        //shootAudioSource = shootSoundBox.GetComponent<AudioSource>();
         ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
     }
 
