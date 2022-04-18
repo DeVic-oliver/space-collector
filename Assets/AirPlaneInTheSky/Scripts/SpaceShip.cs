@@ -13,6 +13,7 @@ public class SpaceShip : MonoBehaviour
     [SerializeField] SpaceShipController spaceShipController;
     [SerializeField] ParticleSystem explosionVFX;
     [SerializeField] AudioClip turboSound;
+    [SerializeField] AudioClip shootSound;
 
     public GameObject ammoType;
 
@@ -116,5 +117,10 @@ public class SpaceShip : MonoBehaviour
     public void PlaySound()
     {
         spaceShipAudioSource.PlayOneShot(turboSound, .3f); 
+    }
+
+    public void PlayShoot()
+    {
+        spaceShipAudioSource.PlayOneShot(shootSound, .3f);
     }
 }

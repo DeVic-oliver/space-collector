@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour
    
     }
 
-
     /*
      * 'CHECK' Functions for checking player resources and status
      */
@@ -122,7 +121,6 @@ public class GameManager : MonoBehaviour
         }
 
         fuelTank.text = "Fuel: " + playerFuel + "%";
-
     }
 
     void CheckPlayerAmmo()
@@ -201,6 +199,4 @@ public class GameManager : MonoBehaviour
             spaceShipScript.Ammo = ammoTotal;
         }
     }
-
-
 }

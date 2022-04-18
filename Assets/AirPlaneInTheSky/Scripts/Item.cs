@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    bool isCollected = false;
-
     [SerializeField] GameObject particlesContainer;
 
     private void OnCollisionEnter(Collision collision)

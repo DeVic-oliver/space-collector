@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    float fireRate = 13.75f;
-    float auxFireRate = 13.75f;
-
     int ammo;
 
     [SerializeField] GameObject spaceShip;
@@ -17,7 +14,6 @@ public class Shoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //shootAudioSource = shootSoundBox.GetComponent<AudioSource>();
         ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
     }
 
@@ -31,19 +27,16 @@ public class Shoot : MonoBehaviour
 
     void Fire()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             if (!(ammo == 0) && ammo <= spaceShip.GetComponent<SpaceShip>().Ammo)
             {
                 shotFlash.Play();
-                fireRate--;
-                if (fireRate <= 0)
-                {
-                    Instantiate(ammoType, transform.position, transform.rotation);
-                    ammo--;
-                    spaceShip.GetComponent<SpaceShip>().Ammo = ammo;
-                    fireRate = auxFireRate;
-                }
+                spaceShip.GetComponent<SpaceShip>().PlayShoot();
+            
+                Instantiate(ammoType, transform.position, transform.rotation);
+                ammo--;
+                spaceShip.GetComponent<SpaceShip>().Ammo = ammo;
             }
         }
     }
