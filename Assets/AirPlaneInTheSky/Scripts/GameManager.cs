@@ -15,11 +15,14 @@ public class GameManager : MonoBehaviour
     int score = 0;
     int playerAmmo;
 
+    bool isGOAudioPlaying = false;
+
     SpaceShip spaceShipScript;
     AudioSource generalSoundHandle;
 
     [SerializeField] float timeToGameOver = 60;
     [SerializeField] AudioClip itemCollectedSound;
+    [SerializeField] AudioClip gameOverVoice;
 
     public GameObject player;
     public GameObject gameOverContainer;
@@ -78,7 +81,13 @@ public class GameManager : MonoBehaviour
         SetCursorVisibility(true);
         gameOverScore.text = scoreDisplayText.text;
         gameOverContainer.gameObject.SetActive(true);
-   
+        if (!isGOAudioPlaying)
+        {
+            //gameOverContainer.GetComponent<AudioSource>().Play();
+            generalSoundHandle.PlayOneShot(gameOverVoice);
+            isGOAudioPlaying = true;
+        }
+        
     }
 
     /*

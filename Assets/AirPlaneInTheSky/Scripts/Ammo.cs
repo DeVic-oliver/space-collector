@@ -23,9 +23,12 @@ public class Ammo : MonoBehaviour
 
     [SerializeField] ParticleSystem hitVFX;
 
+    AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -40,6 +43,7 @@ public class Ammo : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             damage = Random.Range(2, 7);
+            audioSource.Play();
             int obstacleHealth = collision.gameObject.GetComponent<ObstacleStats>().Health - damage;
             collision.gameObject.GetComponent<ObstacleStats>().Health = obstacleHealth;
             Instantiate(hitVFX, transform.position, transform.rotation);

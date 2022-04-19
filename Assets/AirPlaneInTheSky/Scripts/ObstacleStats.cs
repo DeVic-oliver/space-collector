@@ -25,20 +25,38 @@ public class ObstacleStats : MonoBehaviour
         }
     }
 
+    bool isAudioPlaying = false;
+
     [SerializeField] ParticleSystem explosionVFX;
+
+    AudioSource audioSource;
+
+    MeshRenderer meshRenderer;
+    Collider collider;
 
     // Start is called before the first frame update
     void Start()
     {
         health = 100;
+        audioSource = GetComponent<AudioSource>();
+        collider = GetComponent<Collider>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     private void Update()
     {
         if(health <= 0)
         {
-            Instantiate(explosionVFX, transform.position, transform.rotation);
-            Destroy(gameObject);
+            collider.enabled = false;
+            meshRenderer.enabled = false;
+            if (!isAudioPlaying)
+            {
+                Instantiate(explosionVFX, transform.position, transform.rotation);
+                audioSource.Play();
+                isAudioPlaying = true;
+            }
+            
+            Destroy(gameObject, 4f);
         }
     }
 }

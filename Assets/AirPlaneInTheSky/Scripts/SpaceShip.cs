@@ -14,6 +14,7 @@ public class SpaceShip : MonoBehaviour
     [SerializeField] ParticleSystem explosionVFX;
     [SerializeField] AudioClip turboSound;
     [SerializeField] AudioClip shootSound;
+    [SerializeField] AudioClip spaceShipDestroyedSound;
 
     public GameObject ammoType;
 
@@ -109,6 +110,7 @@ public class SpaceShip : MonoBehaviour
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
+            spaceShipAudioSource.PlayOneShot(spaceShipDestroyedSound);
             Instantiate(explosionVFX,transform.position, transform.rotation);
             isAlive = false;
         }
