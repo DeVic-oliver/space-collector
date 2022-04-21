@@ -32,23 +32,31 @@ public class ObstacleStats : MonoBehaviour
     AudioSource audioSource;
 
     MeshRenderer meshRenderer;
-    Collider collider;
+    Collider m_collider;
+    GameObject[] childs;
 
     // Start is called before the first frame update
     void Start()
     {
         health = 100;
         audioSource = GetComponent<AudioSource>();
-        collider = GetComponent<Collider>();
-        meshRenderer = GetComponent<MeshRenderer>();
+        m_collider = GetComponent<Collider>();
+
+         childs = new GameObject[gameObject.transform.childCount];
+        for (int i = 0; i < gameObject.transform.childCount; i++){
+            childs[i] = gameObject.transform.GetChild(i).gameObject;
+        }
     }
 
     private void Update()
     {
         if(health <= 0)
         {
-            collider.enabled = false;
-            meshRenderer.enabled = false;
+            m_collider.enabled = false;
+            foreach(GameObject child in childs)
+            {
+                child.GetComponent<MeshRenderer>().enabled = false;
+            }
             if (!isAudioPlaying)
             {
                 Instantiate(explosionVFX, transform.position, transform.rotation);
