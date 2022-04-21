@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     float fuelTimer = 0;
     float playerFuel;
+    float fuelConsume = 0.01f;
 
     int score = 0;
     int playerAmmo;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverContainer;
 
     public TextMeshProUGUI timer;
-    public TextMeshProUGUI fuelTank;
+    public Slider fuelTank;
     public TextMeshProUGUI ammo;
     public TextMeshProUGUI playerName;
     public TextMeshProUGUI scoreDisplayText;
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
         
         gameOverContainer.gameObject.SetActive(false);
 
-        fuelTank.text = "Fuel: " + spaceShipScript.FuelTank + "%";
+        fuelTank.value = 1;
 
         ammo.text = "Ammo: " + spaceShipScript.Ammo;
 
@@ -67,14 +68,16 @@ public class GameManager : MonoBehaviour
     {
         CheckRemaingTime();
 
-        CheckFuelTank();
 
         CheckPlayerStatus();
 
         CheckPlayerAmmo();
 
     }
-
+    private void LateUpdate()
+    {
+        CheckFuelTank();
+    }
     public void GameOver()
     {
         isGameActive = false;
@@ -120,7 +123,7 @@ public class GameManager : MonoBehaviour
             if (playerFuel <= 0)
             {
                 GameOver();
-                fuelTank.text = "Fuel: " + 0f + "%";
+                fuelTank.value = 0;
             }
             else
             {
@@ -129,7 +132,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        fuelTank.text = "Fuel: " + playerFuel + "%";
+        fuelTank.value = playerFuel * fuelConsume;
     }
 
     void CheckPlayerAmmo()
