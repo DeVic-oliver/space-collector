@@ -28,8 +28,9 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject gameOverContainer;
 
-    public TextMeshProUGUI timer;
     public Slider fuelTank;
+
+    public TextMeshProUGUI timer;
     public TextMeshProUGUI ammo;
     public TextMeshProUGUI playerName;
     public TextMeshProUGUI scoreDisplayText;
@@ -68,16 +69,14 @@ public class GameManager : MonoBehaviour
     {
         CheckRemaingTime();
 
+        CheckFuelTank();
 
         CheckPlayerStatus();
 
         CheckPlayerAmmo();
 
     }
-    private void LateUpdate()
-    {
-        CheckFuelTank();
-    }
+
     public void GameOver()
     {
         isGameActive = false;
