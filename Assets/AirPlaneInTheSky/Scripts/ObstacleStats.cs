@@ -27,11 +27,12 @@ public class ObstacleStats : MonoBehaviour
 
     bool isAudioPlaying = false;
 
+    float speed = 100;
+
     [SerializeField] ParticleSystem explosionVFX;
 
     AudioSource audioSource;
 
-    MeshRenderer meshRenderer;
     Collider m_collider;
     GameObject[] childs;
 
@@ -66,5 +67,12 @@ public class ObstacleStats : MonoBehaviour
             
             Destroy(gameObject, 4f);
         }
+
+        Movimentation();
+    }
+
+    void Movimentation()
+    {
+        transform.Translate(-Vector3.forward * speed * Time.deltaTime, Space.World);
     }
 }

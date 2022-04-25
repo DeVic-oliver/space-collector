@@ -5,11 +5,14 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     //space spawn coordinates xyz
-    float xSpawnRange = 390;
-    float zMinSpawnRange = 1200;
-    float zMaxSpawnRange = 1900;
-    float yMinSpawnRange = 7;
-    float yMaxSpawnRange = 150;
+    float xSpawnRange = 2000;
+    float zMinSpawnRange = 1000;
+    float zMaxSpawnRange = 5000;
+    float ySpawnRange = 800;
+
+    float xObstacle = 2000;
+    float yObstacle = 600;
+    float zObstacle = 7000;
 
     public GameObject target;
     public GameObject fuel;
@@ -20,10 +23,10 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(GameObjectSpawnTimeHandle(target, 2f));
-        StartCoroutine(GameObjectSpawnTimeHandle(fuel, 15f));
-        StartCoroutine(GameObjectSpawnTimeHandle(ammo, 40f));
-        StartCoroutine(GameObjectSpawnTimeHandle(obstacle, 20f));
+        StartCoroutine(GameObjectSpawnTimeHandle(target, -xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 2f));
+        StartCoroutine(GameObjectSpawnTimeHandle(fuel, -xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 15f));
+        StartCoroutine(GameObjectSpawnTimeHandle(ammo, -xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 40f));
+        StartCoroutine(GameObjectSpawnTimeHandle(obstacle, -xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, 17f));
 
     }
 
@@ -33,23 +36,23 @@ public class SpawnManager : MonoBehaviour
 
         
     }
-    void RespawnGameObject(GameObject gameObject)
+    void RespawnGameObject(GameObject gameObject, float xMinRange, float xMaxRange, float yMinRange, float yMaxRange, float zMinRange, float zMaxRange)
     {
-        float xPos = Random.Range(-xSpawnRange, xSpawnRange);
-        float yPos = Random.Range(yMinSpawnRange, yMaxSpawnRange);
-        float zPos = Random.Range(zMinSpawnRange, zMaxSpawnRange);
+        float xPos = Random.Range(xMinRange, xMaxRange);
+        float yPos = Random.Range(yMinRange, yMaxRange);
+        float zPos = Random.Range(zMinRange, zMaxRange);
 
         Vector3 respawnPos = new Vector3(xPos, yPos, zPos);
         Instantiate(gameObject, respawnPos, gameObject.transform.rotation);
     }
 
-    IEnumerator GameObjectSpawnTimeHandle(GameObject gameObject, float repeatAfter)
+    IEnumerator GameObjectSpawnTimeHandle(GameObject gameObject, float xMinRange, float xMaxRange, float yMinRange, float yMaxRange, float zMinRange, float zMaxRange, float repeatAfter)
     {
         while (true)
         {
             yield return new WaitForSeconds(repeatAfter);
-            RespawnGameObject(gameObject);
+            RespawnGameObject(gameObject, xMinRange, xMaxRange, yMinRange, yMaxRange, zMinRange, zMaxRange);
         }
     }
-    
+
 }
