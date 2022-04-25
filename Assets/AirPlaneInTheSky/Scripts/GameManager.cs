@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverContainer;
 
     public Slider fuelTank;
+    public Slider ammo;
 
     public TextMeshProUGUI timer;
-    public TextMeshProUGUI ammo;
-    public TextMeshProUGUI playerName;
+    //public TextMeshProUGUI playerName;
     public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI gameOverScore;
 
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         fuelTank.value = 1;
 
-        ammo.text = "Ammo: " + spaceShipScript.Ammo;
+        ammo.value = 1;
 
         generalSoundHandle = GetComponent<AudioSource>();
         
@@ -136,7 +136,12 @@ public class GameManager : MonoBehaviour
 
     void CheckPlayerAmmo()
     {
-        ammo.text = "Ammo: " + spaceShipScript.Ammo;
+        int ammoAux = spaceShipScript.Ammo;
+
+        float currentAmmoQtt = (ammoAux * 100) / spaceShipScript.AmmoCapacity;
+
+
+        ammo.value = currentAmmoQtt * 0.01f;
     }
 
     void CheckPlayerStatus()

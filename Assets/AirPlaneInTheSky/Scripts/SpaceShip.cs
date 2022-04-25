@@ -36,7 +36,7 @@ public class SpaceShip : MonoBehaviour
     }
 
 
-    int ammo = 100;
+    int ammo = 300;
     public int Ammo
     {
         get { return ammo; }
