@@ -8,8 +8,8 @@ public class Rotation : MonoBehaviour
 
     int opt;
 
-    float noObstacleSpeed = 15f;
-    float obstacleRotationSpeed = 10f;
+    float noObstacleSpeed = 130f;
+    float obstacleRotationSpeed = 20f;
     private void Start()
     {
         opt = Random.Range(0, 7);
