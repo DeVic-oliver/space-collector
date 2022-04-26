@@ -5,7 +5,11 @@ using UnityEngine;
 public class Rotation : MonoBehaviour
 {
     Vector3 eulers;
+
     int opt;
+
+    float noObstacleSpeed = 15f;
+    float obstacleRotationSpeed = 10f;
     private void Start()
     {
         opt = Random.Range(0, 7);
@@ -16,7 +20,7 @@ public class Rotation : MonoBehaviour
     void Update()
     {
     //Just a simple rotation for any gameobject with this script attached
-        transform.Rotate(eulers, Space.World);
+        transform.Rotate(eulers * Time.deltaTime, Space.World);
     }
 
     void CheckGameObject()
@@ -26,31 +30,31 @@ public class Rotation : MonoBehaviour
             switch (opt)
             {
                 case 0:
-                    eulers = new Vector3(1, 0, 0);
+                    eulers = Vector3.Normalize(new Vector3(0.5f, 0, 0)) * obstacleRotationSpeed;
                     break;
                 case 1:
-                    eulers = new Vector3(0, 1, 0);
+                    eulers = Vector3.Normalize(new Vector3(0, 0.5f, 0)) * obstacleRotationSpeed;
                     break;
                 case 2:
-                    eulers = new Vector3(0, 0, 1);
+                    eulers = Vector3.Normalize(new Vector3(0, 0, 0.5f)) * obstacleRotationSpeed;
                     break;
                 case 3:
-                    eulers = new Vector3(1, 1, 0);
+                    eulers = Vector3.Normalize(new Vector3(0.5f, 0.5f, 0)) * obstacleRotationSpeed;
                     break;
                 case 4:
-                    eulers = new Vector3(1, 0, 1);
+                    eulers = Vector3.Normalize(new Vector3(0.5f, 0, 0.5f)) * obstacleRotationSpeed;
                     break;
                 case 5:
-                    eulers = new Vector3(0, 1, 1);
+                    eulers = Vector3.Normalize(new Vector3(0, 0.5f, 0.5f)) * obstacleRotationSpeed;
                     break;
                 case 6:
-                    eulers = new Vector3(1, 1, 1);
+                    eulers = Vector3.Normalize(new Vector3(0.5f, 0.5f, 0.5f)) * obstacleRotationSpeed;
                     break;
             }
         }
         else
         {
-            eulers = new Vector3(0, 1, 0);
+            eulers = new Vector3(0, 1, 0) * noObstacleSpeed;
         }
     }
 }
