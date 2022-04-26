@@ -8,6 +8,7 @@ TagManager:
   - Fuel
   - AmmoSupply
   - Obstacle
+  - TimerSupply
   layers:
   - Default
   - TransparentFX

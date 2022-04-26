@@ -2494,6 +2494,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: badd6c7f607849b41afb6f2a09a93f84, type: 3}
+--- !u!198 &883764594 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3489126023502434309, guid: badd6c7f607849b41afb6f2a09a93f84, type: 3}
+  m_PrefabInstance: {fileID: 883764593}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &921493902
 GameObject:
   m_ObjectHideFlags: 0
@@ -5073,7 +5078,7 @@ MonoBehaviour:
   fuelVFX: {fileID: 1634809150}
   spaceShipController: {fileID: 1951683958}
   explosionVFX: {fileID: 19800002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
-  timeVFX: {fileID: 0}
+  timeVFX: {fileID: 883764594}
   turboSound: {fileID: 8300000, guid: 8b8b193dd11d0f140b03e7fd362e521a, type: 3}
   shootSound: {fileID: 8300000, guid: f9dc8d9847657423fa659c4a60acf0c6, type: 3}
   spaceShipDestroyedSound: {fileID: 8300000, guid: be016e70580e91c4f8a8f9e7701b00d4, type: 3}
