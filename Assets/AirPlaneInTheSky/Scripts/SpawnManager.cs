@@ -5,29 +5,32 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     //space spawn coordinates xyz
-    float xSpawnRange = 2000;
-    float zMinSpawnRange = 1000;
-    float zMaxSpawnRange = 5000;
-    float ySpawnRange = 800;
+    float xSpawnRange = 1200;
+    float zMinSpawnRange = 1800;
+    float zMaxSpawnRange = 4200;
+    float ySpawnRange = 600;
 
-    float xObstacle = 2000;
+    float xObstacle = 1400;
     float yObstacle = 600;
     float zObstacle = 7000;
+
+    int index;
 
     public GameObject target;
     public GameObject fuel;
     public GameObject ammo;
-    public GameObject obstacle;
+    public GameObject[] obstacle = new GameObject[5];
 
+   
 
     // Start is called before the first frame update
     void Start()
     {
+        RandomObstacle();
         StartCoroutine(GameObjectSpawnTimeHandle(target, -xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 2f));
         StartCoroutine(GameObjectSpawnTimeHandle(fuel, -xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 15f));
         StartCoroutine(GameObjectSpawnTimeHandle(ammo, -xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 40f));
-        StartCoroutine(GameObjectSpawnTimeHandle(obstacle, -xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, 17f));
-
+        StartCoroutine(GameObjectSpawnTimeHandle(obstacle[index], -xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, 17f));
     }
 
     // Update is called once per frame
@@ -51,8 +54,13 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(repeatAfter);
+            RandomObstacle();
             RespawnGameObject(gameObject, xMinRange, xMaxRange, yMinRange, yMaxRange, zMinRange, zMaxRange);
         }
     }
 
+    void RandomObstacle()
+    {
+        index = Random.Range(0, 5);
+    }
 }

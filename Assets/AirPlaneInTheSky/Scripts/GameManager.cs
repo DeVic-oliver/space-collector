@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
         isGameActive = true;
 
-        timer.text = "Time: " + timeToGameOver + "s";
+        timer.text = timeToGameOver.ToString();
 
         //playerName.text = MainManager.Instance.PlayerName;
         
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         {
             timeToGameOver -= Time.deltaTime;
 
-            timer.text = "Time: " + Mathf.RoundToInt(timeToGameOver); ;
+            timer.text = Mathf.RoundToInt(timeToGameOver).ToString();
         }
         else
         {
@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
     {
         PlaySound(itemCollectedSound);
         score++;
-        scoreDisplayText.text = "Score: " + score;
+        scoreDisplayText.text = score.ToString();
     }
 
     public void AddFuel()
