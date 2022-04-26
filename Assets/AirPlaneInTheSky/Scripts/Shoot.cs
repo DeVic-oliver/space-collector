@@ -21,7 +21,9 @@ public class Shoot : MonoBehaviour
     void Update()
     {
         ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
+        
         shotFlash.Stop();
+        
         Fire();
     }
 
@@ -29,13 +31,16 @@ public class Shoot : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            if (!(ammo == 0) && ammo <= spaceShip.GetComponent<SpaceShip>().Ammo)
+            if (ammo > 0)
             {
                 shotFlash.Play();
+                
                 spaceShip.GetComponent<SpaceShip>().PlayShoot();
             
                 Instantiate(ammoType, transform.position, transform.rotation);
+                
                 ammo--;
+                
                 spaceShip.GetComponent<SpaceShip>().Ammo = ammo;
             }
         }

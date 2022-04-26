@@ -24,26 +24,28 @@ public class ObstacleStats : MonoBehaviour
             }
         }
     }
+    
+    float speed = 100;
 
     bool isAudioPlaying = false;
 
-    float speed = 100;
-
-    [SerializeField] ParticleSystem explosionVFX;
-
     AudioSource audioSource;
-
     Collider m_collider;
     GameObject[] childs;
+    
+    [SerializeField] ParticleSystem explosionVFX;
 
     // Start is called before the first frame update
     void Start()
     {
         health = 100;
+        
         audioSource = GetComponent<AudioSource>();
+        
         m_collider = GetComponent<Collider>();
 
-         childs = new GameObject[gameObject.transform.childCount];
+        childs = new GameObject[gameObject.transform.childCount];
+        
         for (int i = 0; i < gameObject.transform.childCount; i++){
             childs[i] = gameObject.transform.GetChild(i).gameObject;
         }
@@ -51,22 +53,7 @@ public class ObstacleStats : MonoBehaviour
 
     private void Update()
     {
-        if(health <= 0)
-        {
-            m_collider.enabled = false;
-            foreach(GameObject child in childs)
-            {
-                child.GetComponent<MeshRenderer>().enabled = false;
-            }
-            if (!isAudioPlaying)
-            {
-                Instantiate(explosionVFX, transform.position, transform.rotation);
-                audioSource.Play();
-                isAudioPlaying = true;
-            }
-            
-            Destroy(gameObject, 4f);
-        }
+        CheckHealth();
 
         Movimentation();
     }
@@ -74,5 +61,27 @@ public class ObstacleStats : MonoBehaviour
     void Movimentation()
     {
         transform.Translate(-Vector3.forward * speed * Time.deltaTime, Space.World);
+    }
+
+    void CheckHealth()
+    {
+        if (health <= 0)
+        {
+            m_collider.enabled = false;
+            
+            foreach (GameObject child in childs)
+            {
+                child.GetComponent<MeshRenderer>().enabled = false;
+            }
+            
+            if (!isAudioPlaying)
+            {
+                Instantiate(explosionVFX, transform.position, transform.rotation);
+                audioSource.Play();
+                isAudioPlaying = true;
+            }
+
+            Destroy(gameObject, 4f);
+        }
     }
 }

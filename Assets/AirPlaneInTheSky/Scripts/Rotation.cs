@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Rotation : MonoBehaviour
 {
-    Vector3 eulers;
-
     int opt;
 
     float noObstacleSpeed = 130f;
     float obstacleRotationSpeed = 20f;
+
+    Vector3 eulers;
+
+
     private void Start()
     {
         opt = Random.Range(0, 7);
+       
         CheckGameObject();
        
     }
+
     // Update is called once per frame
     void Update()
     {

@@ -73,21 +73,28 @@ public class GameManager : MonoBehaviour
         CheckPlayerStatus();
 
         CheckPlayerAmmo();
-
     }
 
     public void GameOver()
     {
         isGameActive = false;
+
         SetCursorVisibility(true);
+        
         player.GetComponent<SpaceShip>().enabled = false;
+        
         player.GetComponent<SpaceShipController>().enabled = false;
+        
         gameOverScore.text = /*playerName +*/ "Score: " + scoreDisplayText.text;
+        
         gameOverContainer.gameObject.SetActive(true);
-        GameObject.Find("Magic fire pro orange").GetComponent<ParticleSystem>().Stop();
-        GameObject.Find("Cannon_1").GetComponent<Shoot>().enabled = false;
-        GameObject.Find("Cannon_2").GetComponent<Shoot>().enabled = false;
+
+        DisableGameObjectChilds("Turbine Container");
+
+        DisableGameObjectChilds("Cannon Container");
+
         GameObject.Find("Crosshair").GetComponent<Image>().enabled = false;
+        
         if (!isGOAudioPlaying)
         {
             StartCoroutine(GameOverVoice(2f));
@@ -95,11 +102,7 @@ public class GameManager : MonoBehaviour
         }
         
     }
-    IEnumerator GameOverVoice(float time)
-    {
-        yield return new WaitForSeconds(time);
-        generalSoundHandle.PlayOneShot(gameOverVoice);
-    }
+    
     /*
      * 'CHECK' Functions for checking player resources and status
      */
@@ -148,7 +151,6 @@ public class GameManager : MonoBehaviour
 
         float currentAmmoQtt = (ammoAux * 100) / spaceShipScript.AmmoCapacity;
 
-
         ammo.value = currentAmmoQtt * 0.01f;
     }
 
@@ -160,15 +162,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //-----------------------------------------------------
+    
     void PlaySound(AudioClip audioClip)
     {
         generalSoundHandle.PlayOneShot(audioClip, 0.1f);
-    }
-
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        SetCursorVisibility(false);
     }
 
     void SetCursorVisibility(bool visibility = true)
@@ -184,6 +182,25 @@ public class GameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = visibility;
         }
+    }
+
+    void DisableGameObjectChilds(string gameObjectName)
+    {
+        GameObject parent = GameObject.Find(gameObjectName);
+
+        int childsCount = parent.transform.childCount;
+
+        for (int i = 0; i < childsCount; i++)
+        {
+            parent.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+    }
+
+    IEnumerator GameOverVoice(float time)
+    {
+        yield return new WaitForSeconds(time);
+        generalSoundHandle.PlayOneShot(gameOverVoice);
     }
 
     public void AddScore() 
@@ -223,4 +240,11 @@ public class GameManager : MonoBehaviour
             spaceShipScript.Ammo = ammoTotal;
         }
     }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SetCursorVisibility(false);
+    }
+
 }

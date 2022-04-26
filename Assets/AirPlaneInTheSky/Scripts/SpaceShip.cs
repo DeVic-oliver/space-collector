@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
+    int fuelUsage = 2;
+    int fuelTank = 100;
+
+    bool isDestroyedAudioPlaying = false;
+    
     GameManager gameManager;
     AudioSource spaceShipAudioSource;
 
-    int fuelUsage = 2;
-
-    bool isSpaceShipDestroyedAudioPlaying = false;
-
     [SerializeField] int turboConsume = 3;
+    [SerializeField] int ammoCapacity = 300;
+    [SerializeField] GameObject targetVFX;
+    [SerializeField] GameObject ammoVFX;
+    [SerializeField] GameObject fuelVFX;
+    [SerializeField] GameObject timeVFX;
     [SerializeField] SpaceShipController spaceShipController;
     [SerializeField] ParticleSystem explosionVFX;
     [SerializeField] AudioClip turboSound;
@@ -20,7 +26,6 @@ public class SpaceShip : MonoBehaviour
 
     public GameObject ammoType;
 
-    int fuelTank = 100;
     public int FuelTank 
     {
         get { return fuelTank; }
@@ -55,7 +60,6 @@ public class SpaceShip : MonoBehaviour
         }
     }
     
-    [SerializeField] int ammoCapacity = 300;
     public int AmmoCapacity
     {
         get { return ammoCapacity; }
@@ -72,7 +76,9 @@ public class SpaceShip : MonoBehaviour
     void Start()
     {
         isAlive = true;
+        
         spaceShipController = GetComponent<SpaceShipController>();
+        
         spaceShipAudioSource = GetComponent<AudioSource>();
     }
 
@@ -81,8 +87,11 @@ public class SpaceShip : MonoBehaviour
         if (spaceShipController.isTurboActive)
         {
             int fuelAux = fuelUsage;
+            
             fuelUsage *= turboConsume;
+            
             fuelTank -= fuelUsage;
+            
             fuelUsage = fuelAux;
         }
         else
@@ -98,28 +107,46 @@ public class SpaceShip : MonoBehaviour
         if (other.gameObject.CompareTag("Target"))
         {
             gameManager.AddScore();
+
+            PlayEffectsOfChild(targetVFX);
         }
 
         if (other.gameObject.CompareTag("Fuel"))
         {
             gameManager.AddFuel();
+
+            PlayEffectsOfChild(fuelVFX);
         }
 
         if (other.gameObject.CompareTag("AmmoSupply"))
         {
             gameManager.AddAmmo();
+
+            PlayEffectsOfChild(ammoVFX);
         }
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            if (!isSpaceShipDestroyedAudioPlaying)
+            if (!isDestroyedAudioPlaying)
             {
                 spaceShipAudioSource.PlayOneShot(spaceShipDestroyedSound);
-                isSpaceShipDestroyedAudioPlaying = true;
+
+                isDestroyedAudioPlaying = true;
             }
             
             Instantiate(explosionVFX,transform.position, transform.rotation);
+            
             isAlive = false;
+        }
+    }
+
+    void PlayEffectsOfChild(GameObject parent)
+    {
+        int childsCount = parent.transform.childCount;
+
+        for(int i = 0; i < childsCount; i++)
+        {
+            parent.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
         }
     }
 
