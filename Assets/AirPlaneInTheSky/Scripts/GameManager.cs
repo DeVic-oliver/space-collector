@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     float fuelConsume = 0.01f;
 
     int score = 0;
-    int playerAmmo;
 
     bool isGOAudioPlaying = false;
 
@@ -81,11 +80,15 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = false;
         SetCursorVisibility(true);
+        player.GetComponent<SpaceShip>().enabled = false;
+        player.GetComponent<SpaceShipController>().enabled = false;
         gameOverScore.text = scoreDisplayText.text;
         gameOverContainer.gameObject.SetActive(true);
+        GameObject.Find("Magic fire pro orange").GetComponent<ParticleSystem>().Stop();
+        GameObject.Find("Cannon_1").GetComponent<Shoot>().enabled = false;
+        GameObject.Find("Cannon_2").GetComponent<Shoot>().enabled = false;
         if (!isGOAudioPlaying)
         {
-            //gameOverContainer.GetComponent<AudioSource>().Play();
             generalSoundHandle.PlayOneShot(gameOverVoice);
             isGOAudioPlaying = true;
         }
@@ -117,7 +120,7 @@ public class GameManager : MonoBehaviour
 
         fuelTimer += Time.deltaTime; // fuelTimer is used to decrease fuel of the spaceship after a certain amout of time
 
-        if (fuelTimer > 2)
+        if (fuelTimer > 2 && isGameActive)
         {
             if (playerFuel <= 0)
             {
