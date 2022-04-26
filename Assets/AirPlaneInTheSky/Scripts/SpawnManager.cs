@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject target;
     public GameObject fuel;
     public GameObject ammo;
+    public GameObject timer;
     public GameObject[] obstacle = new GameObject[5];
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(GameObjectSpawnTimeHandle(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 2f, target));
         StartCoroutine(GameObjectSpawnTimeHandle(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 15f, fuel));
         StartCoroutine(GameObjectSpawnTimeHandle(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 40f, ammo));
+        StartCoroutine(GameObjectSpawnTimeHandle(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, 50f, timer));
         StartCoroutine(GameObjectSpawnTimeHandle(-xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, 17f, null, obstacle));
     }
 

@@ -17,9 +17,9 @@ public class SpaceShip : MonoBehaviour
     [SerializeField] GameObject targetVFX;
     [SerializeField] GameObject ammoVFX;
     [SerializeField] GameObject fuelVFX;
-    [SerializeField] GameObject timeVFX;
     [SerializeField] SpaceShipController spaceShipController;
     [SerializeField] ParticleSystem explosionVFX;
+    [SerializeField] ParticleSystem timeVFX;
     [SerializeField] AudioClip turboSound;
     [SerializeField] AudioClip shootSound;
     [SerializeField] AudioClip spaceShipDestroyedSound;
@@ -123,6 +123,13 @@ public class SpaceShip : MonoBehaviour
             gameManager.AddAmmo();
 
             PlayEffectsOfChild(ammoVFX);
+        }
+
+        if (other.gameObject.CompareTag("TimerSupply"))
+        {
+            gameManager.AddTime();
+
+            timeVFX.Play();
         }
 
         if (other.gameObject.CompareTag("Obstacle"))

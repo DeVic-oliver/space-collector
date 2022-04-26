@@ -7,7 +7,6 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    GameObject spawnManager;
 
     float fuelTimer = 0;
     float playerFuel;
@@ -17,10 +16,14 @@ public class GameManager : MonoBehaviour
 
     bool isGOAudioPlaying = false;
 
+    string playerName;
+
     SpaceShip spaceShipScript;
     AudioSource generalSoundHandle;
+    GameObject spawnManager;
 
     [SerializeField] float timeToGameOver = 60;
+    [SerializeField] float bonusTime = 25;
     [SerializeField] AudioClip itemCollectedSound;
     [SerializeField] AudioClip gameOverVoice;
 
@@ -31,7 +34,6 @@ public class GameManager : MonoBehaviour
     public Slider ammo;
 
     public TextMeshProUGUI timer;
-    //public TextMeshProUGUI playerName;
     public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI gameOverScore;
 
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
 
         timer.text = timeToGameOver.ToString();
 
-        //playerName.text = MainManager.Instance.PlayerName;
+        playerName = MainManager.Instance.PlayerName;
         
         gameOverContainer.gameObject.SetActive(false);
 
@@ -85,7 +87,7 @@ public class GameManager : MonoBehaviour
         
         player.GetComponent<SpaceShipController>().enabled = false;
         
-        gameOverScore.text = /*playerName +*/ "Score: " + scoreDisplayText.text;
+        gameOverScore.text = playerName + ": " + scoreDisplayText.text;
         
         gameOverContainer.gameObject.SetActive(true);
 
@@ -239,6 +241,14 @@ public class GameManager : MonoBehaviour
         {
             spaceShipScript.Ammo = ammoTotal;
         }
+    }
+
+    public void AddTime()
+    {
+        PlaySound(itemCollectedSound);
+        timeToGameOver += bonusTime;
+
+        timer.text = Mathf.RoundToInt(timeToGameOver).ToString();
     }
 
     public void RestartGame()
