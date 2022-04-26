@@ -9,6 +9,8 @@ public class SpaceShip : MonoBehaviour
 
     int fuelUsage = 2;
 
+    bool isSpaceShipDestroyedAudioPlaying = false;
+
     [SerializeField] int turboConsume = 3;
     [SerializeField] SpaceShipController spaceShipController;
     [SerializeField] ParticleSystem explosionVFX;
@@ -110,7 +112,12 @@ public class SpaceShip : MonoBehaviour
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            spaceShipAudioSource.PlayOneShot(spaceShipDestroyedSound);
+            if (!isSpaceShipDestroyedAudioPlaying)
+            {
+                spaceShipAudioSource.PlayOneShot(spaceShipDestroyedSound);
+                isSpaceShipDestroyedAudioPlaying = true;
+            }
+            
             Instantiate(explosionVFX,transform.position, transform.rotation);
             isAlive = false;
         }

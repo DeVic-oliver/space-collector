@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Magic fire pro orange").GetComponent<ParticleSystem>().Stop();
         GameObject.Find("Cannon_1").GetComponent<Shoot>().enabled = false;
         GameObject.Find("Cannon_2").GetComponent<Shoot>().enabled = false;
+        GameObject.Find("Crosshair").GetComponent<Image>().enabled = false;
         if (!isGOAudioPlaying)
         {
             generalSoundHandle.PlayOneShot(gameOverVoice);
