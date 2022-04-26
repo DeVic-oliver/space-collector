@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         SetCursorVisibility(true);
         player.GetComponent<SpaceShip>().enabled = false;
         player.GetComponent<SpaceShipController>().enabled = false;
-        gameOverScore.text = scoreDisplayText.text;
+        gameOverScore.text = /*playerName +*/ "Score: " + scoreDisplayText.text;
         gameOverContainer.gameObject.SetActive(true);
         GameObject.Find("Magic fire pro orange").GetComponent<ParticleSystem>().Stop();
         GameObject.Find("Cannon_1").GetComponent<Shoot>().enabled = false;
@@ -90,12 +90,16 @@ public class GameManager : MonoBehaviour
         GameObject.Find("Crosshair").GetComponent<Image>().enabled = false;
         if (!isGOAudioPlaying)
         {
-            generalSoundHandle.PlayOneShot(gameOverVoice);
+            StartCoroutine(GameOverVoice(2f));
             isGOAudioPlaying = true;
         }
         
     }
-
+    IEnumerator GameOverVoice(float time)
+    {
+        yield return new WaitForSeconds(time);
+        generalSoundHandle.PlayOneShot(gameOverVoice);
+    }
     /*
      * 'CHECK' Functions for checking player resources and status
      */
