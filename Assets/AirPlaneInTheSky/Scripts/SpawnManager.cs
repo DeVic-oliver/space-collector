@@ -14,6 +14,10 @@ public class SpawnManager : MonoBehaviour
     float yObstacle = 600;
     float zObstacle = 7000;
 
+
+    int count = 0;
+
+    
     public GameObject target;
     public GameObject fuel;
     public GameObject ammo;
@@ -30,21 +34,15 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(GameObjectSpawnTimeHandle(-xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, 17f, null, obstacle));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-        
-    }
-   
-    void RespawnGameObject(float xMinRange, float xMaxRange, float yMinRange, float yMaxRange, float zMinRange, float zMaxRange, GameObject gameObject = default, GameObject[] gameObjects = default)
+    void RespawnGameObject(float xMinRange, float xMaxRange, float yMinRange, float yMaxRange, float zMinRange, float zMaxRange, GameObject gameObject = default(GameObject), GameObject[] gameObjects = default(GameObject[]))
     {
         float xPos = Random.Range(xMinRange, xMaxRange);
         float yPos = Random.Range(yMinRange, yMaxRange);
         float zPos = Random.Range(zMinRange, zMaxRange);
 
         Vector3 respawnPos = new Vector3(xPos, yPos, zPos);
-        
+
         if (!(gameObjects == null))
         {
             int index = RandomObstacle();
@@ -60,7 +58,9 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
+
             yield return new WaitForSeconds(repeatAfter);
+
             RespawnGameObject(xMinRange, xMaxRange, yMinRange, yMaxRange, zMinRange, zMaxRange, gameObject, gameObjects);
         }
     }

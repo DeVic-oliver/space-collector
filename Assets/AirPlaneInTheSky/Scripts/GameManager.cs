@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
         timer.text = timeToGameOver.ToString();
 
-        playerName = MainManager.Instance.PlayerName;
+        //playerName = MainManager.Instance.PlayerName;
         
         gameOverContainer.gameObject.SetActive(false);
 
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         
         player.GetComponent<SpaceShipController>().enabled = false;
         
-        gameOverScore.text = playerName + ": " + scoreDisplayText.text;
+        //gameOverScore.text = playerName + ": " + scoreDisplayText.text;
         
         gameOverContainer.gameObject.SetActive(true);
 
