@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 12909208}
   - component: {fileID: 12909207}
-  - component: {fileID: 12909209}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -148,11 +147,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12909206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c5f407db02946c4c9bb0c9565630781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  fuel: {fileID: 0}
+  ammo: {fileID: 0}
+  timer: {fileID: 0}
+  obstacle:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &12909208
 Transform:
   m_ObjectHideFlags: 0
@@ -168,21 +177,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &12909209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12909206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d5a56d6a246654697d720cf9f04d1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pooledObejcts: []
-  objectToPool: {fileID: 4016617787552727249, guid: 3ecb0e51e4a5acc4da8cbba572b44044, type: 3}
-  amountToPool: 20
 --- !u!1 &16042906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,7 +1066,7 @@ GameObject:
   - component: {fileID: 430712473}
   - component: {fileID: 430712474}
   m_Layer: 0
-  m_Name: Cannon_2
+  m_Name: Barrel_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1102,9 +1096,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 430712472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da8309e8b024c4408dd1ec82b53e52e, type: 3}
+  m_Script: {fileID: 11500000, guid: ac7fd28da9098b2469b1789d75d1fec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cannon: {fileID: 1271935397}
 --- !u!1 &439649444
 GameObject:
   m_ObjectHideFlags: 0
@@ -3464,7 +3459,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1271935398}
   - component: {fileID: 1271935399}
-  - component: {fileID: 1271935400}
   m_Layer: 0
   m_Name: Cannon Container
   m_TagString: Untagged
@@ -3502,25 +3496,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spaceShip: {fileID: 1951683956}
-  cannon_1: {fileID: 1798503190}
-  cannon_2: {fileID: 430712472}
+  barrelLeft: {fileID: 1798503190}
+  barrelRight: {fileID: 430712472}
   shotFlash: {fileID: 19800004, guid: 30b4cc2728d8cec499fad63ba93785a4, type: 3}
   ammoType: {fileID: 3732215254681456026, guid: e1a921129894a1f4e904212a35451c90, type: 3}
---- !u!114 &1271935400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271935397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9d5a56d6a246654697d720cf9f04d1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pooledObejcts: []
-  objectToPool: {fileID: 3732215254681456026, guid: e1a921129894a1f4e904212a35451c90, type: 3}
-  amountToPool: 20
 --- !u!1 &1290154603
 GameObject:
   m_ObjectHideFlags: 0
@@ -5030,7 +5009,7 @@ GameObject:
   - component: {fileID: 1798503191}
   - component: {fileID: 1798503192}
   m_Layer: 0
-  m_Name: Cannon_1
+  m_Name: Barrel_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5060,9 +5039,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1798503190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da8309e8b024c4408dd1ec82b53e52e, type: 3}
+  m_Script: {fileID: 11500000, guid: ac7fd28da9098b2469b1789d75d1fec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cannon: {fileID: 1271935397}
 --- !u!1 &1951683956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6919785598676136297, guid: 2dd421233b21bfb47aac86017eaa5283, type: 3}
