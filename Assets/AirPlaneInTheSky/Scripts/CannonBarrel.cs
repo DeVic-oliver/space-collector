@@ -25,10 +25,6 @@ public class CannonBarrel : MonoBehaviour
         bullet = cannonScript.AmmoType;
     }
 
-    private void Update()
-    {
-    }
-
     GameObject CreatedPoolItem()
     {
         GameObject instance = Instantiate(bullet, Vector3.zero, bullet.transform.rotation);
@@ -57,8 +53,5 @@ public class CannonBarrel : MonoBehaviour
         bullet.GetComponent<Ammo>().CannonBarrel = gameObject;
         bullet.transform.position = transform.position;
         bullet.transform.rotation = transform.rotation;
-        Debug.Log(pool.CountActive);
-        Debug.Log(pool.CountInactive);
-        Debug.Log(pool.CountAll);
     }
 }
