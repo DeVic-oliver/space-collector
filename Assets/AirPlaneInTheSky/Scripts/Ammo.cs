@@ -8,8 +8,10 @@ public class Ammo : MonoBehaviour
     int damage;
 
     float speed = 1200f;
-
     float timeToDestroy = 2f;
+    float countToRelease;
+
+    bool isDestroyed = false;
 
     public int Damage 
     {
@@ -42,18 +44,43 @@ public class Ammo : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        
         CannonBarrelScript = cannonBarrel.GetComponent<CannonBarrel>();
+
+        hitVFX = GameObject.Find("WFX_Explosion Small").GetComponent<ParticleSystem>();
     }
 
     private void Update()
     {
-        MoveFoward();
+        if (isDestroyed == true)
+        {
+            if (countToRelease > 4)
+            {
+                ReturnToPool();
+                countToRelease = 0;
+            }
+            else
+            {
+                countToRelease += Time.deltaTime;
+            }
+        }
+        else
+        {
+            MoveFoward();
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+
+            hitVFX.Play();
+
+            isDestroyed = true;
+
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+
             damage = Random.Range(2, 7);
             
             audioSource.Play();
@@ -61,10 +88,6 @@ public class Ammo : MonoBehaviour
             int obstacleHealth = collision.gameObject.GetComponent<ObstacleStats>().Health - damage;
             
             collision.gameObject.GetComponent<ObstacleStats>().Health = obstacleHealth;
-            
-            Instantiate(hitVFX, transform.position, transform.rotation);
-
-            CannonBarrelScript.pool.Release(gameObject);
         }
     }
 
@@ -77,5 +100,12 @@ public class Ammo : MonoBehaviour
             CannonBarrelScript.pool.Release(gameObject);
             timeToDestroy = 2f;
         }
+    }
+
+    void ReturnToPool()
+    {
+        CannonBarrelScript.pool.Release(gameObject);
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        isDestroyed = false;
     }
 }

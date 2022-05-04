@@ -80,6 +80,8 @@ public class SpaceShip : MonoBehaviour
         spaceShipController = GetComponent<SpaceShipController>();
         
         spaceShipAudioSource = GetComponent<AudioSource>();
+
+        explosionVFX = GameObject.Find("WFX_Nuke").GetComponent<ParticleSystem>();
     }
 
     public float DecreaseFuel()
@@ -140,8 +142,8 @@ public class SpaceShip : MonoBehaviour
 
                 isDestroyedAudioPlaying = true;
             }
-            
-            Instantiate(explosionVFX,transform.position, transform.rotation);
+
+            explosionVFX.Play();
             
             isAlive = false;
         }
