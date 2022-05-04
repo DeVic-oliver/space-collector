@@ -15,17 +15,22 @@ public class SpawnManager : MonoBehaviour
     float yObstacle = 600;
     float zObstacle = 7000;
 
-    float count = 0;
-
-    public ObjectPool<GameObject> itemPool;
+    float countItem = 0;
+    float countObstacle = 0;
 
     [SerializeField] GameObject[] items;
+    [SerializeField] GameObject[] obstacles;
+    [SerializeField] float itemRespawnTime = 3.75f;
+    [SerializeField] float obstacleRespawnTime = 7.25f;
 
-    [SerializeField] GameObject[] obstacle;
+    public ObjectPool<GameObject> itemPool;
+    public ObjectPool<GameObject> obstaclePool;
+
 
     private void Awake()
     {
         itemPool = new ObjectPool<GameObject>(CreatedPoolItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, false, 10, 10);
+        obstaclePool = new ObjectPool<GameObject>(CreatedPoolObstacle, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, false, 10, 10);
     }
     // Start is called before the first frame update
     void Start()
@@ -36,28 +41,36 @@ public class SpawnManager : MonoBehaviour
 
     private void Update()
     {
-        if (count > 3.75f) 
+        if (countItem > itemRespawnTime)
         {
-            RespawnGameObject(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, items);
-            count = 0;
+            RespawnGameObject(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, items, "Item");
+            countItem = 0;
         }
         else
         {
-            count += Time.deltaTime;
+            countItem += Time.deltaTime;
+        }
+        if (countObstacle > obstacleRespawnTime) {
+            RespawnGameObject(-xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, obstacles, "Obstacle");
+            countObstacle = 0;
+        }
+        else
+        {
+            countObstacle += Time.deltaTime;
         }
     }
 
-    void RespawnGameObject(float xMinRange, float xMaxRange, float yMinRange, float yMaxRange, float zMinRange, float zMaxRange, GameObject[] gameObjects = default(GameObject[]))
+    void RespawnGameObject(float xMinRange, float xMaxRange, float yMinRange, float yMaxRange, float zMinRange, float zMaxRange, GameObject[] gameObjects, string type)
     {
-   
-        GameObject item = itemPool.Get();
-
-        float xPos = Random.Range(xMinRange, xMaxRange);
-        float yPos = Random.Range(yMinRange, yMaxRange);
-        float zPos = Random.Range(zMinRange, zMaxRange);
-
-        item.transform.position = RandomPosition(xPos, yPos, zPos);
-     
+        if(type == "Item") { 
+           GameObject item = itemPool.Get();
+           item.transform.position = RandomPosition(xMinRange, xMaxRange, yMinRange, yMaxRange, zMinRange, zMaxRange);
+        }
+        else if(type == "Obstacle")
+        {
+            GameObject obstacle = obstaclePool.Get();
+            obstacle.transform.position = RandomPosition(xMinRange, xMaxRange, yMinRange, yMaxRange, zMinRange, zMaxRange);
+        }
     }
 
     int RandomIndex(GameObject[] gameObjectArray)
@@ -72,24 +85,34 @@ public class SpawnManager : MonoBehaviour
         itemInstance.SetActive(false);
         return itemInstance;
     }
-
-    void OnTakeFromPool(GameObject item)
+    GameObject CreatedPoolObstacle()
     {
-        item.SetActive(true);
+        int index = RandomIndex(obstacles);
+        GameObject obstacleInstance = Instantiate(obstacles[index], Vector3.zero, obstacles[index].transform.rotation);
+        obstacleInstance.SetActive(false);
+        return obstacleInstance;
+    }
+    void OnTakeFromPool(GameObject gameObj)
+    {
+        gameObj.SetActive(true);
     }
 
-    void OnReturnedToPool(GameObject item)
+    void OnReturnedToPool(GameObject gameObj)
     {
-        item.SetActive(false);
+        gameObj.SetActive(false);
     }
 
-    void OnDestroyPoolObject(GameObject item)
+    void OnDestroyPoolObject(GameObject gameObj)
     {
-        Destroy(item);
+        Destroy(gameObj);
     }
 
-    Vector3 RandomPosition(float x, float y, float z) 
+    Vector3 RandomPosition(float xMinRange, float xMaxRange, float yMinRange, float yMaxRange, float zMinRange, float zMaxRange) 
     {
+        float x = Random.Range(xMinRange, xMaxRange);
+        float y = Random.Range(yMinRange, yMaxRange);
+        float z = Random.Range(zMinRange, zMaxRange);
+        
         Vector3 respawnPos = new Vector3(x, y, z);
         return respawnPos;
     }

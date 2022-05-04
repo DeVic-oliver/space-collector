@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObstacleStats : MonoBehaviour
 {
 
-    int health;
+    int health = 100;
     public int Health
     {
         get
@@ -24,30 +24,48 @@ public class ObstacleStats : MonoBehaviour
             }
         }
     }
-    
+
+    float countToRelease = 0;
+
     float speed = 100;
 
     bool isAudioPlaying = false;
+    [SerializeField] bool isDestroyed;
 
     AudioSource audioSource;
     Collider m_collider;
     GameObject[] childs;
+    ParticleSystem explosionVFX;
     
-    [SerializeField] ParticleSystem explosionVFX;
+    GameObject SpawnManager;
+
+
+    private void Awake()
+    {
+        SpawnManager = GameObject.Find("SpawnManager");
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        health = 100;
-        
+        isDestroyed = false;
+
         audioSource = GetComponent<AudioSource>();
         
         m_collider = GetComponent<Collider>();
 
-        childs = new GameObject[gameObject.transform.childCount];
+        childs = new GameObject[gameObject.transform.childCount - 1];
         
         for (int i = 0; i < gameObject.transform.childCount; i++){
-            childs[i] = gameObject.transform.GetChild(i).gameObject;
+
+            if (gameObject.transform.GetChild(i).gameObject.CompareTag("ObstacleChild"))
+            {
+
+                childs[i] = gameObject.transform.GetChild(i).gameObject;
+            }else if (gameObject.transform.GetChild(i).gameObject.CompareTag("FxTemporaire"))
+            {
+                explosionVFX = gameObject.transform.GetChild(i).gameObject.GetComponent<ParticleSystem>();
+            }
         }
     }
 
@@ -56,6 +74,19 @@ public class ObstacleStats : MonoBehaviour
         CheckHealth();
 
         Movimentation();
+
+        if (isDestroyed == true)
+        {
+            if (countToRelease > 4)
+            {
+                ReturnToPool();
+                countToRelease = 0;
+            }
+            else
+            {
+                countToRelease += Time.deltaTime;
+            }
+        }
     }
 
     void Movimentation()
@@ -65,8 +96,9 @@ public class ObstacleStats : MonoBehaviour
 
     void CheckHealth()
     {
-        if (health <= 0)
+        if (health <= 0 && isDestroyed == false)
         {
+            isDestroyed = true;
             m_collider.enabled = false;
             
             foreach (GameObject child in childs)
@@ -76,12 +108,22 @@ public class ObstacleStats : MonoBehaviour
             
             if (!isAudioPlaying)
             {
-                Instantiate(explosionVFX, transform.position, transform.rotation);
+                explosionVFX.Play();
                 audioSource.Play();
                 isAudioPlaying = true;
             }
+        }
+    }
 
-            Destroy(gameObject, 4f);
+    void ReturnToPool()
+    {
+        SpawnManager.GetComponent<SpawnManager>().obstaclePool.Release(gameObject);
+        isDestroyed = false;
+        health = 100;
+        m_collider.enabled = true;
+        foreach (GameObject child in childs)
+        {
+            child.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }
