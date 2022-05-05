@@ -34,8 +34,6 @@ public class Cannon : MonoBehaviour
     {
         ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
         
-        shotFlash.Stop();
-        
         Fire();
     }
 

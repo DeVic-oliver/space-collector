@@ -143,7 +143,6 @@ public class GameManager : MonoBehaviour
                 fuelTimer = 0;
             }
         }
-
         fuelTank.value = playerFuel * fuelConsume;
     }
 
