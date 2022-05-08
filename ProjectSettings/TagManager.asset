@@ -11,6 +11,7 @@ TagManager:
   - TimerSupply
   - ObstacleChild
   - FxTemporaire
+  - Limit
   layers:
   - Default
   - TransparentFX

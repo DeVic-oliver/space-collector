@@ -11,11 +11,11 @@ public class GameManager : MonoBehaviour
     float fuelTimer = 0;
     float playerFuel;
     float fuelConsume = 0.01f;
+    float warningTimerCount = 10;
 
     int score = 0;
-
+ 
     bool isGOAudioPlaying = false;
-
     string playerName;
 
     SpaceShip spaceShipScript;
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] float bonusTime = 25;
     [SerializeField] AudioClip itemCollectedSound;
     [SerializeField] AudioClip gameOverVoice;
+    [SerializeField] GameObject warningPanel;
+    [SerializeField] TextMeshProUGUI warningTimer;
 
     public GameObject player;
     public GameObject gameOverContainer;
@@ -36,7 +38,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timer;
     public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI gameOverScore;
-
 
     public bool isGameActive = false;
 
@@ -161,8 +162,25 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
-    }
 
+        if (player.GetComponent<SpaceShip>().IsPlayerTrespassing)
+        {
+            warningPanel.SetActive(true);
+            warningTimer.text = warningTimerCount.ToString("F1");
+            warningTimerCount-=Time.deltaTime;
+            if(warningTimerCount <= 0)
+            {
+                warningPanel.SetActive(false);
+                player.GetComponent<SpaceShip>().IsPlayerTrespassing = false;
+                GameOver();
+            }
+        }
+        else
+        {
+            warningPanel.SetActive(false);
+            warningTimerCount = 10;
+        }
+    }
     //-----------------------------------------------------
     
     void PlaySound(AudioClip audioClip)
