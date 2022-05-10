@@ -16,17 +16,21 @@ public class GameManager : MonoBehaviour
     int score = 0;
  
     bool isGOAudioPlaying = false;
+    bool destroyTrespasser = false;
+
     string playerName;
 
     SpaceShip spaceShipScript;
     AudioSource generalSoundHandle;
     GameObject spawnManager;
+    Collider limitBoxColider;
 
     [SerializeField] float timeToGameOver = 60;
     [SerializeField] float bonusTime = 25;
     [SerializeField] AudioClip itemCollectedSound;
     [SerializeField] AudioClip gameOverVoice;
     [SerializeField] GameObject warningPanel;
+    [SerializeField] GameObject limitBox;
     [SerializeField] TextMeshProUGUI warningTimer;
 
     public GameObject player;
@@ -61,7 +65,10 @@ public class GameManager : MonoBehaviour
         ammo.value = 1;
 
         generalSoundHandle = GetComponent<AudioSource>();
-        
+
+        limitBoxColider = limitBox.GetComponent<Collider>();
+
+
         SetCursorVisibility(false);
     }
 
@@ -163,7 +170,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if (player.GetComponent<SpaceShip>().IsPlayerTrespassing)
+        if (!limitBoxColider.bounds.Contains(player.transform.position))
         {
             warningPanel.SetActive(true);
             warningTimer.text = warningTimerCount.ToString("F1");
@@ -171,7 +178,6 @@ public class GameManager : MonoBehaviour
             if(warningTimerCount <= 0)
             {
                 warningPanel.SetActive(false);
-                player.GetComponent<SpaceShip>().IsPlayerTrespassing = false;
                 GameOver();
             }
         }

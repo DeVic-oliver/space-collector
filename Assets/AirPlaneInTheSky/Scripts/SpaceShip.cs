@@ -6,6 +6,7 @@ public class SpaceShip : MonoBehaviour
 {
     int fuelUsage = 2;
     int fuelTank = 100;
+    int limitHitCount = 0;
 
     bool isDestroyedAudioPlaying = false;
 
@@ -152,19 +153,6 @@ public class SpaceShip : MonoBehaviour
             explosionVFX.Play();
             
             isAlive = false;
-        }
-
-        if (other.gameObject.CompareTag("Limit"))
-        {
-            Debug.Log("player" + isPlayerTrespassing);
-            if (isPlayerTrespassing == false) 
-            { 
-                IsPlayerTrespassing = true;
-            }
-            else
-            {
-                IsPlayerTrespassing = false;
-            }  
         }
     }
 
