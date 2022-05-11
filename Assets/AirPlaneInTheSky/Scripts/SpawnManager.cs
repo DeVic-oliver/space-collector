@@ -41,22 +41,26 @@ public class SpawnManager : MonoBehaviour
 
     private void Update()
     {
-        if (countItem > itemRespawnTime)
+        if (!GameManager.isGamePaused)
         {
-            RespawnGameObject(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, items, "Item");
-            countItem = 0;
-        }
-        else
-        {
-            countItem += Time.deltaTime;
-        }
-        if (countObstacle > obstacleRespawnTime) {
-            RespawnGameObject(-xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, obstacles, "Obstacle");
-            countObstacle = 0;
-        }
-        else
-        {
-            countObstacle += Time.deltaTime;
+            if (countItem > itemRespawnTime)
+            {
+                RespawnGameObject(-xSpawnRange, xSpawnRange, -ySpawnRange, ySpawnRange, zMinSpawnRange, zMaxSpawnRange, items, "Item");
+                countItem = 0;
+            }
+            else
+            {
+                countItem += Time.deltaTime;
+            }
+            if (countObstacle > obstacleRespawnTime)
+            {
+                RespawnGameObject(-xObstacle, xObstacle, -yObstacle, yObstacle, zObstacle, zObstacle, obstacles, "Obstacle");
+                countObstacle = 0;
+            }
+            else
+            {
+                countObstacle += Time.deltaTime;
+            }
         }
     }
 

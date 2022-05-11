@@ -35,20 +35,22 @@ public class SpaceShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        MouseControl();
-
-        RollControl();
-
-        if (Input.GetKeyDown(KeyCode.Space) && !isTurboActive)
+        if (!GameManager.isGamePaused)
         {
-            Turbo();
-        }
+            MouseControl();
 
-        if (!isTurboActive)
-        {
-            shockWave.Stop();
-            SwitchTurboTurbine(false);
+            RollControl();
+
+            if (Input.GetKeyDown(KeyCode.Space) && !isTurboActive)
+            {
+                Turbo();
+            }
+
+            if (!isTurboActive)
+            {
+                shockWave.Stop();
+                SwitchTurboTurbine(false);
+            }
         }
     }
 

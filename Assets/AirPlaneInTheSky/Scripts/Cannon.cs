@@ -32,9 +32,12 @@ public class Cannon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
-        
-        Fire();
+        if (!GameManager.isGamePaused)
+        {
+            ammo = spaceShip.GetComponent<SpaceShip>().Ammo;
+
+            Fire();
+        }
     }
 
     void Fire()

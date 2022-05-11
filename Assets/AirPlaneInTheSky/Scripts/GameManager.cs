@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
     int score = 0;
  
     bool isGOAudioPlaying = false;
-    bool destroyTrespasser = false;
+    bool isWorldAudioMuted = false;
 
     string playerName;
 
@@ -31,7 +32,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip gameOverVoice;
     [SerializeField] GameObject warningPanel;
     [SerializeField] GameObject limitBox;
+    [SerializeField] GameObject pauseMenu;
     [SerializeField] TextMeshProUGUI warningTimer;
+
+    public static bool isGamePaused = false;
 
     public GameObject player;
     public GameObject gameOverContainer;
@@ -76,13 +80,23 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckRemaingTime();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isGamePaused = !isGamePaused;
+            PauseGame();
+        }
 
-        CheckFuelTank();
+        if (!isGamePaused) { 
+            CheckRemaingTime();
 
-        CheckPlayerStatus();
+            CheckFuelTank();
 
-        CheckPlayerAmmo();
+            CheckPlayerStatus();
+
+            CheckPlayerAmmo();
+
+            CheckWorldSound();
+        }
     }
 
     public void GameOver()
@@ -112,7 +126,23 @@ public class GameManager : MonoBehaviour
         }
         
     }
-    
+
+    void PauseGame()
+    {
+        if (isGamePaused)
+        {
+            Time.timeScale = 0;
+            AudioListener.pause = true;
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            AudioListener.pause = false;
+            pauseMenu.SetActive(false);
+        }
+    }
+
     /*
      * 'CHECK' Functions for checking player resources and status
      */
@@ -188,7 +218,17 @@ public class GameManager : MonoBehaviour
         }
     }
     //-----------------------------------------------------
-    
+    void CheckWorldSound()
+    {
+        if (!isWorldAudioMuted)
+        {
+            AudioListener.pause = false;
+        }
+        else
+        {
+            AudioListener.pause = true;
+        }
+    }
     void PlaySound(AudioClip audioClip)
     {
         generalSoundHandle.PlayOneShot(audioClip, 0.1f);
@@ -278,6 +318,33 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         SetCursorVisibility(false);
+    }
+
+    public void ResumeGame()
+    {
+        isGamePaused = false;
+        PauseGame();
+    }
+
+    public void Mute()
+    {
+        if (isWorldAudioMuted)
+        {
+            isWorldAudioMuted = false;
+        }
+        else
+        {
+            isWorldAudioMuted = true;
+        }
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
     }
 
 }
