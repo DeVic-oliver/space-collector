@@ -7,6 +7,7 @@ using TMPro;
 using UnityEditor;
 public class MainMenu : MonoBehaviour
 {
+    string targetScene;
     [SerializeField] TMP_InputField playerNameInput;
     [SerializeField] Button startButton;
     [SerializeField] Button exitButton;
@@ -14,7 +15,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        targetScene = "Infinite";
     }
 
     // Update is called once per frame
@@ -32,7 +33,8 @@ public class MainMenu : MonoBehaviour
         else
         {
             MainManager.Instance.PlayerName = playerNameInput.text;
-            SceneManager.LoadScene(1);
+            LoadingData.sceneToLoad = targetScene;
+            SceneManager.LoadScene("LoadingScene");
         }
         
     }
