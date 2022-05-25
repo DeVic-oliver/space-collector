@@ -6,9 +6,13 @@ using UnityEngine.UI;
 
 public class LoadScene : MonoBehaviour
 {
+    int spacePressedCount = 0;
+
     AsyncOperation operation;
     
     [SerializeField] Slider progressBar;
+    [SerializeField] GameObject infoObjective;
+    [SerializeField] GameObject infoControls;
 
 
     // Start is called before the first frame update
@@ -20,13 +24,21 @@ public class LoadScene : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && progressBar.value == 1f) 
-        { 
+        if (Input.GetKeyDown(KeyCode.Space) && progressBar.value == 1f)
+        {
+            spacePressedCount++;
+            if (spacePressedCount == 1)
+            {
+                infoObjective.SetActive(false);
+                infoControls.SetActive(true);
+            }
+            else if (spacePressedCount >= 1)
+            {
                 operation.allowSceneActivation = true;
+            }
         }
     }
-
-    IEnumerator LoadSceneAsync()
+        IEnumerator LoadSceneAsync()
     {
         operation = SceneManager.LoadSceneAsync(LoadingData.sceneToLoad);
 

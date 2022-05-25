@@ -96,6 +96,12 @@ public class GameManager : MonoBehaviour
             CheckPlayerAmmo();
 
             CheckWorldSound();
+
+            SetCursorVisibility(false);
+        }
+        else
+        {
+            SetCursorVisibility(true);
         }
     }
 
