@@ -36,7 +36,9 @@ public class Ammo : MonoBehaviour
     [SerializeField] ParticleSystem hitVFX;
 
     GameObject cannonBarrel;
-    
+
+    GameObject vfxChild;
+
     public GameObject CannonBarrel { get { return cannonBarrel; } set { cannonBarrel = value; } }
 
 
@@ -47,7 +49,10 @@ public class Ammo : MonoBehaviour
         
         CannonBarrelScript = cannonBarrel.GetComponent<CannonBarrel>();
 
-        hitVFX = GameObject.Find("WFX_Explosion Small").GetComponent<ParticleSystem>();
+        vfxChild = gameObject.transform.GetChild(0).transform.gameObject;
+
+        hitVFX = vfxChild.GetComponent<ParticleSystem>();
+
     }
 
     private void Update()
@@ -85,9 +90,8 @@ public class Ammo : MonoBehaviour
             
             audioSource.Play();
             
-            int obstacleHealth = collision.gameObject.GetComponent<ObstacleStats>().Health - damage;
-            
-            collision.gameObject.GetComponent<ObstacleStats>().Health = obstacleHealth;
+            collision.gameObject.GetComponent<ObstacleStats>().Health -= damage;
+
         }
     }
 
@@ -98,7 +102,7 @@ public class Ammo : MonoBehaviour
         if (timeToDestroy <= 0)
         {
             CannonBarrelScript.pool.Release(gameObject);
-            timeToDestroy = 2f;
+            timeToDestroy = 4f;
         }
     }
 

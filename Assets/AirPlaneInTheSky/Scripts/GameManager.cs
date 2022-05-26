@@ -11,11 +11,12 @@ public class GameManager : MonoBehaviour
 
     float fuelTimer = 0;
     float playerFuel;
+    float fuelAux;
     float fuelConsume = 0.01f;
     float warningTimerCount = 10;
 
     int score = 0;
- 
+
     bool isGOAudioPlaying = false;
     bool isWorldAudioMuted = false;
 
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreDisplayText;
     public TextMeshProUGUI gameOverScore;
 
-    public bool isGameActive = false;
+    public static bool isGameActive = false;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
         timer.text = timeToGameOver.ToString();
 
         //playerName = MainManager.Instance.PlayerName;
-        
+
         gameOverContainer.gameObject.SetActive(false);
 
         fuelTank.value = 1;
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
             PauseGame();
         }
 
-        if (!isGamePaused) { 
+        if (!isGamePaused && isGameActive) {
             CheckRemaingTime();
 
             CheckFuelTank();
@@ -103,6 +104,11 @@ public class GameManager : MonoBehaviour
         {
             SetCursorVisibility(true);
         }
+
+        if (!isGameActive)
+        {
+            GameOver();
+        }
     }
 
     public void GameOver()
@@ -110,13 +116,13 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
 
         SetCursorVisibility(true);
-        
+
         player.GetComponent<SpaceShip>().enabled = false;
-        
+
         player.GetComponent<SpaceShipController>().enabled = false;
-        
+
         //gameOverScore.text = playerName + ": " + scoreDisplayText.text;
-        
+
         gameOverContainer.gameObject.SetActive(true);
 
         DisableGameObjectChilds("Turbine Container");
@@ -124,13 +130,13 @@ public class GameManager : MonoBehaviour
         DisableGameObjectChilds("Cannon Container");
 
         GameObject.Find("Crosshair").GetComponent<Image>().enabled = false;
-        
+
         if (!isGOAudioPlaying)
         {
             StartCoroutine(GameOverVoice(2f));
             isGOAudioPlaying = true;
         }
-        
+
     }
 
     void PauseGame()
@@ -171,6 +177,7 @@ public class GameManager : MonoBehaviour
     void CheckFuelTank()
     {
         playerFuel = spaceShipScript.FuelTank;
+        
 
         fuelTimer += Time.deltaTime; // fuelTimer is used to decrease fuel of the spaceship after a certain amout of time
 
@@ -183,11 +190,13 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                playerFuel = spaceShipScript.DecreaseFuel();
-                fuelTimer = 0;
+                //fuelAux = playerFuel;
+                spaceShipScript.DecreaseFuel();
+                fuelTank.value -= fuelConsume;
             }
+            fuelTimer = 0;
         }
-        fuelTank.value = playerFuel * fuelConsume;
+
     }
 
     void CheckPlayerAmmo()
@@ -206,7 +215,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if (!limitBoxColider.bounds.Contains(player.transform.position))
+        if (!limitBoxColider.bounds.Contains(player.transform.position) && player.GetComponent<SpaceShip>().isAlive )
         {
             warningPanel.SetActive(true);
             warningTimer.text = warningTimerCount.ToString("F1");
