@@ -40,7 +40,7 @@ public class SpaceShip : MonoBehaviour
         {
             if(value < 0)
             {
-                Debug.Log("ERROR");
+                fuelTank = 0;
             }
             else
             {
@@ -58,7 +58,7 @@ public class SpaceShip : MonoBehaviour
         {
             if(value < 0)
             {
-                Debug.Log("ERROR");
+                ammo = 0;
             }
             else
             {
@@ -91,24 +91,26 @@ public class SpaceShip : MonoBehaviour
         explosionVFX = GameObject.Find("WFX_Nuke").GetComponent<ParticleSystem>();
     }
 
+
     public float DecreaseFuel()
     {
         if (spaceShipController.isTurboActive)
         {
+            
             int fuelAux = fuelUsage;
             
             fuelUsage *= turboConsume;
-            
-            fuelTank -= fuelUsage;
+         
+            FuelTank -= fuelUsage;
             
             fuelUsage = fuelAux;
         }
         else
         {
-            fuelTank -= fuelUsage;
+            FuelTank -= fuelUsage;
         }
 
-        return fuelTank;
+        return FuelTank;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -141,7 +143,7 @@ public class SpaceShip : MonoBehaviour
             timeVFX.Play();
         }
 
-        if (other.gameObject.CompareTag("Obstacle"))
+        if (other.gameObject.CompareTag("Obstacle") || other.gameObject.CompareTag("ForceField"))
         {
             if (!isDestroyedAudioPlaying)
             {

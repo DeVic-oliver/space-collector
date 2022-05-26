@@ -12,6 +12,7 @@ TagManager:
   - ObstacleChild
   - FxTemporaire
   - Limit
+  - ForceField
   layers:
   - Default
   - TransparentFX
