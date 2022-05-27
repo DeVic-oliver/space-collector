@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
 
         player.GetComponent<SpaceShipController>().enabled = false;
 
-        gameOverScore.text = playerName + ": " + scoreDisplayText.text;
+        gameOverScore.text = playerName + "'s score: " + scoreDisplayText.text;
 
         gameOverContainer.gameObject.SetActive(true);
 
@@ -186,17 +186,16 @@ public class GameManager : MonoBehaviour
             if (playerFuel <= 0)
             {
                 GameOver();
+
                 fuelTank.value = 0;
             }
             else
             {
-                //fuelAux = playerFuel;
-                spaceShipScript.DecreaseFuel();
-                fuelTank.value -= fuelConsume;
+                playerFuel = spaceShipScript.DecreaseFuel();
             }
             fuelTimer = 0;
         }
-
+        fuelTank.value = fuelConsume * playerFuel;
     }
 
     void CheckPlayerAmmo()
@@ -302,8 +301,10 @@ public class GameManager : MonoBehaviour
         else
         {
             spaceShipfFuel += 25;
+            fuelTank.value += 25 * fuelConsume;
         }
         spaceShipScript.FuelTank = spaceShipfFuel;
+ 
     }
 
     public void AddAmmo()
